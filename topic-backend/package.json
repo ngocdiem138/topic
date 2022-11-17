@@ -1,0 +1,19 @@
+{
+  "name": "topic-backend",
+  "version": "1.0.0",
+  "description": "Backend for the topic",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "express": "~4.16.1",
+    "mongoose": "^6.6.7",
+    "mongoose-delete": "^0.5.4",
+    "mongoose-slug-generator": "^1.0.4",
+    "morgan": "~1.9.1"
+  }
+}
