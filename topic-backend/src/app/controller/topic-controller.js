@@ -1,3 +1,5 @@
+const Topic = require('../model/topic.js')
+
 class TopicController {
 
   create(req, res, next) {
@@ -18,4 +20,4 @@ class TopicController {
 
 }
 
-module.exports = TopicController;
+module.exports = new TopicController();

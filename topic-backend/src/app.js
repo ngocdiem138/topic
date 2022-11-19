@@ -4,10 +4,11 @@ const database = require('./config/database/mongodb');
 
 const mongoose =require('mongoose');
 const app = express();
-const port = 3000;
+
 
 //dababae
 const URI = "mongodb+srv://nachiluong:trungmika2001@cluster0.bkxlluj.mongodb.net/?retryWrites=true&w=majority"
+const port = 3000;
 // database.connect();
 
 // Routes
@@ -22,8 +23,3 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => {
       console.log('err', err);
     });
-
-// Application
-// app.listen(port, () => {
-//   console.log(`App listening at http://localhost:${port}`);
-// });

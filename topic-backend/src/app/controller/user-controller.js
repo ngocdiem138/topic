@@ -5,7 +5,12 @@ class UserController {
         try {
             const user = new User({
                 name: "test",
-                email: "test"
+                email: "test",
+                password: "test",
+                gender: "nam",
+                dob: " 20/12/2001",
+                address: "484 Le Van Viet",
+                role_id: "student"
             })
             user.save();
             // const users =  User.find();

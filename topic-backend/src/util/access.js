@@ -1,4 +1,4 @@
-import { UserService } from '../app/service/user.service';
+const UserService = require('../app/service/user.service');
 
 function checkAccess(req) {
   return new UserService()
