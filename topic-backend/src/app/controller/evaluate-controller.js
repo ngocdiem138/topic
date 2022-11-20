@@ -1,3 +1,5 @@
+const Evaluate = require('../model/evaluate.js')
+
 class EvaluateController {
 
   get(req, res, next) {
@@ -18,4 +20,4 @@ class EvaluateController {
 
 }
 
-module.exports = EvaluateController;
+module.exports = new EvaluateController();
