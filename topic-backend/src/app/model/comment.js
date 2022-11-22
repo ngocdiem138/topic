@@ -7,8 +7,14 @@ const Comment = new Schema(
     {
         id: {type: String},
         content: {type: String, required: true},
-        topic_id: {type: String, required: true},
-        user_id: {type: String, required: true}
+        topicId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Topic',
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
     },
     {
         timestamps: true
