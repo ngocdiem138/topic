@@ -8,7 +8,7 @@ function route(app) {
   app.use('/login', loginRoute);
   app.use('/profile', profileRoute);
   app.use('/topic', topicRoute);
-  app.use('/user', userRoute);
+  app.use('/users', userRoute);
   app.use('/evaluate', evaluateRoute);
 }
 

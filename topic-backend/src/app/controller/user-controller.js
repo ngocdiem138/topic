@@ -1,37 +1,65 @@
 const User = require('../model/user.js')
+const {multipleMongooseToObject} = require('../../util/mongoose')
 
-class UserController {
-    getUsers(req, res, next) {
-        try {
-            const user = new User({
-                name: "test",
-                email: "test",
-                password: "test",
-                gender: "nam",
-                dob: " 20/12/2001",
-                address: "484 Le Van Viet",
-                role_id: "student"
-            })
-            user.save();
-            // const users =  User.find();
-            // res.status(200).json(users);
-        } catch (err) {
-            console.log("THem sai roi", err)
-            // res.status(500).json({error: err});
-        }
-    };
 
-    create(req, res, next) {
-
+const getUsers = async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        // multipleMongooseToObject(users);
+        res.status(200).send(users);
+    } catch (err) {
+        console.log("Lay ra loi roi roi", err)
+        res.status(500).send({error: err});
     }
+};
 
-    update(req, res, next) {
-
-    }
-
-    delete(req, res, next) {
-
+const createUser = async (req, res, next) => {
+    try {
+        const user = await new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            gender: req.body.gender,
+            dob: req.body.dob,
+            address: req.body.address,
+            roleId: req.body.roleId
+        })
+        await user.save();
+        res.status(200).send(user);
+    } catch (err) {
+        console.log("THem sai roi", err)
+        res.status(500).send({error: err});
     }
 }
 
-module.exports = new UserController();
+const deleteUser = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        // console.log(id)
+        await User.deleteOne({_id: id});
+        res.status(200).send();
+    } catch (err) {
+        console.log("Xoa sai roi", err)
+        res.status(500).send({error: err});
+    }
+}
+
+const updateUser = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        await User.updateOne({_id: id}, {
+            $set: req.body
+        })
+        res.status(200).send();
+    } catch (err) {
+        console.log("Cap nhat sai roi", err)
+        res.status(500).send({error: err});
+    }
+}
+
+module.exports = {
+    getUsers,
+    createUser,
+    deleteUser,
+    updateUser
+};
