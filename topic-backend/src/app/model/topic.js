@@ -9,7 +9,10 @@ const Topic = new Schema(
         name: {type: String, required: true},
         start_date: {type: Date, required: true},
         end_date: {type: Date, required: true},
-        instructor_id: {type: String, required: true},
+        instructor_id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
         group_responsibility_id: {type: String, required: true},
         group_evaluate_id: {type: String, required: true}
     },

@@ -5,8 +5,15 @@ const mongooseDelete = require('mongoose-delete');
 
 const GroupUser = new Schema(
     {
-        user_id: {type: String, required: true},
-        group_id: {type: String, required: true}
+        groupId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Group',
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+
     },
     {
         timestamps: true
