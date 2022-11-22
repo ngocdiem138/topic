@@ -7,7 +7,7 @@ const Role = new Schema(
     {
         id: {type: String},
         name: {type: String, required: true},
-        description: {type: String, required: true}
+        description: {type: String}
     },
     {
         timestamps: true

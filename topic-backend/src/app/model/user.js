@@ -12,7 +12,10 @@ const User = new Schema(
         gender: {type: String},
         dob: {type: String},
         address: {type: String},
-        role_id: {type: String, required: true}
+        roleId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Role',
+        },
     },
     {
         timestamps: true
