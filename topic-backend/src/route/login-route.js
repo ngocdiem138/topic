@@ -17,6 +17,6 @@ const router = express.Router();
  * }
  * @Description: Login
  */
-router.get('/login', loginController.login);
+router.post('/login', loginController.login);
 
 module.exports = router;

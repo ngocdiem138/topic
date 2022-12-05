@@ -14,7 +14,7 @@ const port = 3000;
 // database.connect();
 
 const corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "http://localhost:3001"
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
