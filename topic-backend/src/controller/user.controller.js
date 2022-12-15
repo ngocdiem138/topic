@@ -1,20 +1,9 @@
-const express = require('express'),
-    mongoose = require('mongoose'),
-    autoIncrement = require('mongoose-auto-increment'),
-    Joi = require('joi'),
-    app = express();
-jwt = require('jsonwebtoken');
-require('dotenv').config();
+const Joi = require('joi')
 const { Employee } = require('../model/Employee');
-const { verifyHR, verifyHREmployee, verifyEmployee } = require('../middleware/Middleware');
 const { EmployeeValidation, EmployeeValidationUpdate, EmployeePersonalInfoValidation } = require('../middleware/EmployeeValidation');
 
-//connecting to mongodb
-let mongoURI = process.env.DATABASEURL;
-//setting up jwt token
-let jwtKey = process.env.JWTKEY;
 
-app.get("/api/employee", verifyHR, (req, res) => {
+export const findAllUser = async (req, res) => {
   // {path: 'projects', populate: {path: 'portals'}}
   Employee.find()
       // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
@@ -33,9 +22,8 @@ app.get("/api/employee", verifyHR, (req, res) => {
       .exec(function (err, employee) {
         res.send(employee);
       });
-});
-
-app.post("/api/employee", verifyHR, (req, res) => {
+}
+export const addUser = async (req, res) => {
   Joi.validate(req.body, EmployeeValidation, (err, result) => {
     if (err) {
       console.log(err);
@@ -74,9 +62,8 @@ app.post("/api/employee", verifyHR, (req, res) => {
       console.log(req.body);
     }
   });
-});
-
-app.put("/api/employee/:id", verifyHR, (req, res) => {
+}
+export const updateUser = async (req, res) => {
   Joi.validate(req.body, EmployeeValidationUpdate, (err, result) => {
     if (err) {
       console.log(err);
@@ -116,24 +103,22 @@ app.put("/api/employee/:id", verifyHR, (req, res) => {
     console.log("put");
     console.log(req.body);
   });
-});
-
-app.delete("/api/employee/:id", verifyHR, (req, res) => {
-  // Employee.findByIdAndRemove({ _id: req.params.id }, function (err, employee) {
-  //   if (!err) {
-  //     console.log(" state deleted");
-  //     res.send(employee);
-  //   } else {
-  //     console.log(err);
-  //     res.send("error");
-  //   }
-  // });
-  res.send("error");
+}
+export const deleteUser = async (req, res) => {
+  Employee.findByIdAndRemove({ _id: req.params.id }, function (err, employee) {
+    if (!err) {
+      console.log(" state deleted");
+      res.send(employee);
+    } else {
+      console.log(err);
+      res.send("error");
+    }
+  });
+  // res.send("error");
   console.log("delete");
   console.log(req.params.id);
-});
-
-app.get("/api/personal-info/:id", verifyHREmployee, (req, res) => {
+}
+export const findOneStudent = async (req, res) => {
   console.log("personal-info", req.params.id);
   Employee.findById(req.params.id)
       // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
@@ -153,9 +138,8 @@ app.get("/api/personal-info/:id", verifyHREmployee, (req, res) => {
         // employee = employees;
         res.send(employee);
       });
-});
-
-app.put("/api/personal-info/:id", verifyEmployee, (req, res) => {
+}
+export const updateOneStudent = async (req, res) => {
   Joi.validate(req.body, EmployeePersonalInfoValidation, (err, result) => {
     if (err) {
       console.log(err);
@@ -190,4 +174,5 @@ app.put("/api/personal-info/:id", verifyEmployee, (req, res) => {
     console.log("put");
     console.log(req.body);
   });
-});
+}
+
