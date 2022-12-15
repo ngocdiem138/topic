@@ -2509,3 +2509,195 @@ app.delete("/api/leave-application-hr/:id/:id2", verifyHR, (req, res) => {
     }
   });
 });
+//////////////////////////////////
+/////////////////////login
+
+app.post("/api/login", (req, res) => {
+    Joi.validate(
+        req.body,
+        Joi.object().keys({
+            email: Joi.string()
+                .max(200)
+                .required(),
+            password: Joi.string()
+                .max(100)
+                .required()
+        }),
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(400).send(err.details[0].message);
+            } else {
+                Employee.findOne(
+                    { Email: req.body.email },
+                    "Password _id Account FirstName LastName",
+                    function (err, document) {
+                        if (err || document == null) {
+                            res.send("false");
+                        } else {
+                            if (document.Password == req.body.password) {
+                                emp = {
+                                    _id: document._id,
+                                    Account: document.Account,
+                                    FirstName: document.FirstName,
+                                    LastName: document.LastName
+                                };
+                                var token = jwt.sign(emp, jwtKey);
+                                res.send(token);
+                            } else {
+                                res.sendStatus(400);
+                            }
+                        }
+                    }
+                );
+            }
+        }
+    );
+});
+
+// middleware
+
+function verifyAdmin(req, res, next) {
+    console.log(req.headers["authorization"]);
+    const Header = req.headers["authorization"];
+
+    if (typeof Header !== "undefined") {
+        // decodedData = jwt.decode(req.headers['authorization']);
+        // if(decodedData.Account)
+        jwt.verify(Header, jwtKey, (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                console.log(authData);
+                if (authData.Account == 1) {
+                    next();
+                } else {
+                    res.sendStatus(403);
+                }
+            }
+        });
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
+function verifyAdminHR(req, res, next) {
+    console.log(req.headers["authorization"]);
+    const Header = req.headers["authorization"];
+
+    if (typeof Header !== "undefined") {
+        // decodedData = jwt.decode(req.headers['authorization']);
+        // if(decodedData.Account)
+        jwt.verify(Header, jwtKey, (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                console.log(authData);
+                if (authData.Account == 1 || authData.Account == 2) {
+                    next();
+                } else {
+                    res.sendStatus(403);
+                }
+            }
+        });
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
+function verifyHR(req, res, next) {
+    console.log(req.headers["authorization"]);
+    const Header = req.headers["authorization"];
+
+    if (typeof Header !== "undefined") {
+        // decodedData = jwt.decode(req.headers['authorization']);
+        // if(decodedData.Account)
+        jwt.verify(Header, jwtKey, (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                console.log(authData);
+                if (authData.Account == 2) {
+                    next();
+                } else {
+                    res.sendStatus(403);
+                }
+            }
+        });
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
+function verifyHREmployee(req, res, next) {
+    console.log(req.headers["authorization"]);
+    const Header = req.headers["authorization"];
+
+    if (typeof Header !== "undefined") {
+        // decodedData = jwt.decode(req.headers['authorization']);
+        // if(decodedData.Account)
+        jwt.verify(Header, jwtKey, (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                console.log(authData);
+                if (authData.Account == 2) {
+                    next();
+                } else if (authData.Account == 3) {
+                    if (authData._id == req.params.id) {
+
+
+                        next();
+                    }
+                    else {
+                        res.sendStatus(403);
+
+                    }
+
+
+                } else {
+                    res.sendStatus(403);
+                }
+            }
+        });
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
+function verifyEmployee(req, res, next) {
+    console.log(req.headers["authorization"]);
+    const Header = req.headers["authorization"];
+
+    if (typeof Header !== "undefined") {
+        // decodedData = jwt.decode(req.headers['authorization']);
+        // if(decodedData.Account)
+        jwt.verify(Header, jwtKey, (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                if (authData._id == req.params.id) {
+                    console.log(authData);
+                    if (authData.Account == 3) {
+                        next();
+                    } else {
+                        res.sendStatus(403);
+                    }
+                } else {
+                    res.sendStatus(403);
+                }
+            }
+        });
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
+
+var port = process.env.PORT;
+if (port & process.env.IP) {
+    app.listen(port, process.env.IP, () => {
+        console.log("started");
+    });
+} else
+    app.listen(port, () => console.log(`Example app listening on port ${port}!`));
