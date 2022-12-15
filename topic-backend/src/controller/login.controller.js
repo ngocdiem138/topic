@@ -1,3 +1,17 @@
+const express = require('express'),
+    mongoose = require('mongoose'),
+    autoIncrement = require('mongoose-auto-increment'),
+    Joi = require('joi'),
+    app = express();
+jwt = require('jsonwebtoken');
+require('dotenv').config();
+const { Employee } = require('../model/Employee');
+
+//connecting to mongodb
+let mongoURI = process.env.DATABASEURL;
+//setting up jwt token
+let jwtKey = process.env.JWTKEY;
+
 app.post('/api/login', (req, res) => {
   Joi.validate(
       req.body,
@@ -21,14 +35,14 @@ app.post('/api/login', (req, res) => {
                 if (err || document == null) {
                   res.send('false');
                 } else {
-                  if (document.Password == req.body.password) {
-                    emp = {
+                  if (document.Password === req.body.password) {
+                    const emp = {
                       _id: document._id,
                       Account: document.Account,
                       FirstName: document.FirstName,
                       LastName: document.LastName
                     };
-                    var token = jwt.sign(emp, jwtKey);
+                    const token = jwt.sign(emp, jwtKey);
                     res.send(token);
                   } else {
                     res.sendStatus(400);
