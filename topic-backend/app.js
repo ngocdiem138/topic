@@ -1,8 +1,12 @@
-const express = require('express'),
-    mongoose = require('mongoose'),
-    autoIncrement = require('mongoose-auto-increment'),
-    Joi = require('joi'),
-    app = express();
+const express = require('express')
+const mongoose = require('mongoose')
+const autoIncrement = require('mongoose-auto-increment')
+const app = express();
+
+const LoginRoute = require('./src/route/LoginRoute')
+const RoleRoute = require('./src/route/RoleRoute')
+const UserRoute = require('./src/route/UserRoute')
+
 jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -12,13 +16,13 @@ let mongoURI = process.env.DATABASEURL;
 let jwtKey = process.env.JWTKEY;
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-  next();
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    next();
 });
 
 mongoose.set('useNewUrlParser', true);
@@ -37,11 +41,15 @@ autoIncrement.initialize(conn);
 //for request body
 app.use(express.json());
 
+app.use("/", UserRoute)
+app.use("/", LoginRoute)
+app.use("/", RoleRoute)
+
 const port = process.env.PORT;
-if (port & process.env.IP) {
-  app.listen(port, process.env.IP, () => {
-    console.log('started');
-  });
+if (port && process.env.IP) {
+    app.listen(port, process.env.IP, () => {
+        console.log('started');
+    });
 } else {
-  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+    app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 }
