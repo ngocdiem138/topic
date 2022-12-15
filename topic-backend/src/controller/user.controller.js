@@ -1,3 +1,19 @@
+const express = require('express'),
+    mongoose = require('mongoose'),
+    autoIncrement = require('mongoose-auto-increment'),
+    Joi = require('joi'),
+    app = express();
+jwt = require('jsonwebtoken');
+require('dotenv').config();
+const { Employee } = require('../model/Employee');
+const { verifyHR, verifyHREmployee, verifyEmployee } = require('../middleware/Middleware');
+const { EmployeeValidation, EmployeeValidationUpdate, EmployeePersonalInfoValidation } = require('../middleware/EmployeeValidation');
+
+//connecting to mongodb
+let mongoURI = process.env.DATABASEURL;
+//setting up jwt token
+let jwtKey = process.env.JWTKEY;
+
 app.get("/api/employee", verifyHR, (req, res) => {
   // {path: 'projects', populate: {path: 'portals'}}
   Employee.find()
