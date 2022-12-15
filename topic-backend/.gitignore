@@ -1,6 +1,4 @@
-node_modules/
-logs
-*.log
-npm-debug.log*
-.env* 
-.local
+/node_modules
+config.js
+jwtKey.js
+.env
