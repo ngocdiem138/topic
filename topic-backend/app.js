@@ -618,3 +618,710 @@ const CompanyValidation = Joi.object().keys({
       .required(),
   Deleted: Joi.optional()
 });
+
+app.get("/api/role", verifyAdminHR, (req, res) => {
+    Role.find()
+        .populate("company")
+        .exec(function (err, role) {
+            res.send(role);
+        });
+});
+
+app.post("/api/role", verifyAdminHR, (req, res) => {
+    Joi.validate(req.body, RoleValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newRole;
+
+            newRole = {
+                RoleName: req.body.RoleName,
+                company: req.body.CompanyID
+            };
+
+            Role.create(newRole, function (err, role) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    res.send(role);
+                    console.log("new Role Saved");
+                }
+            });
+            // }
+            console.log(req.body);
+        }
+    });
+});
+
+app.put("/api/role/:id", verifyAdminHR, (req, res) => {
+    Joi.validate(req.body, RoleValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let updateRole;
+
+            updateRole = {
+                RoleName: req.body.RoleName,
+                company: req.body.CompanyID
+            };
+
+            Role.findByIdAndUpdate(req.params.id, updateRole, function (err, role) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(updateRole);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+app.delete("/api/role/:id", verifyAdminHR, (req, res) => {
+    Employee.find({ role: req.params.id }, function (err, r) {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {
+            if (r.length == 0) {
+                Role.findByIdAndRemove({ _id: req.params.id }, function (err, role) {
+                    if (!err) {
+                        console.log(" Role deleted");
+                        res.send(role);
+                    } else {
+                        console.log("error");
+                        res.send("err");
+                    }
+                });
+                console.log("delete");
+                console.log(req.params.id);
+            } else {
+                res
+                    .status(403)
+                    .send(
+                        "This role is associated with Employee so you can not delete this"
+                    );
+            }
+        }
+    });
+});
+app.get("/api/position", verifyAdminHR, (req, res) => {
+    Position.find()
+        .populate("company")
+        .exec(function (err, role) {
+            res.send(role);
+        });
+});
+
+app.post("/api/position", verifyAdminHR, (req, res) => {
+    Joi.validate(req.body, PositionValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newPosition;
+
+            newPosition = {
+                PositionName: req.body.PositionName,
+                company: req.body.CompanyID
+            };
+
+            Position.create(newPosition, function (err, position) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    res.send(position);
+                    console.log("new Role Saved");
+                }
+            });
+        }
+        console.log(req.body);
+    });
+});
+app.put("/api/position/:id", verifyAdminHR, (req, res) => {
+    Joi.validate(req.body, PositionValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let updatePosition;
+
+            updatePosition = {
+                PositionName: req.body.PositionName,
+                company: req.body.CompanyID
+            };
+
+            Position.findByIdAndUpdate(req.params.id, updatePosition, function (
+                err,
+                position
+            ) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(updatePosition);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+
+app.delete("/api/position/:id", verifyAdminHR, (req, res) => {
+    Employee.find({ position: req.params.id }, function (err, p) {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {
+            if (p.length == 0) {
+                Position.findByIdAndRemove({ _id: req.params.id }, function (
+                    err,
+                    position
+                ) {
+                    if (!err) {
+                        console.log("position deleted");
+                        res.send(position);
+                        // });
+                        console.log("new Position Saved");
+                    } else {
+                        console.log("error");
+                        res.send("err");
+                    }
+                });
+                console.log("delete");
+                console.log(req.params.id);
+            } else {
+                res
+                    .status(403)
+                    .send(
+                        "This Position is associated with Employee so you can not delete this"
+                    );
+            }
+        }
+    });
+});
+
+//Department
+app.get("/api/department", verifyAdminHR, (req, res) => {
+    Department.find()
+        .populate("company")
+        .exec(function (err, employees) {
+            res.send(employees);
+        });
+});
+app.post("/api/department", verifyAdminHR, (req, res) => {
+    Joi.validate(req.body, DepartmentValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newDepartment;
+
+            newDepartment = {
+                DepartmentName: req.body.DepartmentName,
+                company: req.body.CompanyID
+            };
+
+            Department.create(newDepartment, function (err, department) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    res.send(department);
+                    console.log("new Role Saved");
+                }
+            });
+        }
+        console.log(req.body);
+    });
+});
+app.put("/api/department/:id", verifyAdminHR, (req, res) => {
+    Joi.validate(req.body, DepartmentValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let updateDepartment;
+
+            updateDepartment = {
+                DepartmentName: req.body.DepartmentName,
+                company: req.body.CompanyID
+            };
+
+            Department.findByIdAndUpdate(req.params.id, updateDepartment, function (
+                err,
+                department
+            ) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(updateDepartment);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+
+app.delete("/api/department/:id", verifyAdminHR, (req, res) => {
+    Employee.find({ department: req.params.id }, function (err, d) {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {
+            if (d.length == 0) {
+                Department.findByIdAndRemove({ _id: req.params.id }, function (
+                    err,
+                    department
+                ) {
+                    if (!err) {
+                        console.log("department deleted");
+                        res.send(department);
+                        // });
+                        console.log("new Department Saved");
+                    } else {
+                        console.log("error");
+                        res.send("err");
+                    }
+                });
+                console.log("delete");
+                console.log(req.params.id);
+            } else {
+                res
+                    .status(403)
+                    .send(
+                        "This department is associated with Employee so you can not delete this"
+                    );
+            }
+        }
+    });
+});
+
+app.get("/api/admin/portal", verifyAdmin, (req, res) => {
+    Portal.find()
+        .populate({ path: "projects" })
+        .exec(function (err, portalData) {
+            if (err) {
+                res.send("err");
+                console.log(err);
+            }
+            res.send(portalData);
+        });
+});
+
+app.post("/api/admin/portal", verifyAdmin, (req, res) => {
+    Joi.validate(req.body, PortalValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newPortal;
+            newPortal = {
+                PortalName: req.body.PortalName,
+                Status: req.body.Status
+            };
+
+            Portal.create(newPortal, function (err, portalData) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    res.send(portalData);
+                    console.log("new Portal Saved");
+                }
+            });
+            console.log(req.body);
+        }
+    });
+});
+
+app.put("/api/admin/portal/:id", verifyAdmin, (req, res) => {
+    Joi.validate(req.body, PortalValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let updatePortal;
+            updatePortal = {
+                PortalName: req.body.PortalName,
+                Status: req.body.Status
+            };
+            Portal.findByIdAndUpdate(req.body._id, updatePortal, function (
+                err,
+                Portal
+            ) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(updatePortal);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+
+app.delete("/api/admin/portal/:id", verifyAdmin, (req, res) => {
+    Portal.findByIdAndRemove({ _id: req.params.id }, function (err, portal) {
+        if (!err) {
+            console.log("portal deleted");
+            res.send(portal);
+            Project.deleteMany({ portals: { _id: portal._id } }, function (err) {
+                if (err) {
+                    res.send("error");
+                    console.log(err);
+                }
+            });
+            console.log("new Portal Saved");
+        } else {
+            console.log("error");
+            res.send("err");
+        }
+    });
+    console.log("delete");
+    console.log(req.params.id);
+});
+
+///*********bid */
+
+app.get("/api/admin/project-bid", verifyAdmin, (req, res) => {
+    // var employee = {};
+
+    Project.find()
+        .populate("portals")
+        .exec(function (err, project) {
+            if (err) {
+                console.log(err);
+                res.send("err");
+            } else {
+                res.send(project);
+            }
+        });
+});
+
+app.post("/api/admin/project-bid", verifyAdmin, (req, res) => {
+    Joi.validate(req.body, ProjectValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let project;
+            project = {
+                ProjectTitle: req.body.ProjectTitle,
+                ProjectURL: req.body.ProjectURL,
+                ProjectDesc: req.body.ProjectDesc,
+                portals: req.body.Portal_ID,
+                EstimatedTime: req.body.EstimatedTime,
+                EstimatedCost: req.body.EstimatedCost,
+                ResourceID: req.body.ResourceID,
+                Status: req.body.Status,
+                Remark: req.body.Remark
+            };
+            Project.create(project, function (err, project) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    res.send(project);
+                    console.log("new project Saved");
+                }
+            });
+            console.log(req.body);
+        }
+    });
+});
+
+app.put("/api/admin/project-bid/:id", verifyAdmin, (req, res) => {
+    Joi.validate(req.body, ProjectValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let updateProject;
+            updateProject = {
+                ProjectTitle: req.body.ProjectTitle,
+                ProjectURL: req.body.ProjectURL,
+                ProjectDesc: req.body.ProjectDesc,
+                portals: req.body.Portal_ID,
+                EstimatedTime: req.body.EstimatedTime,
+                EstimatedCost: req.body.EstimatedCost,
+                ResourceID: req.body.ResourceID,
+                Status: req.body.Status,
+                Remark: req.body.Remark
+            };
+
+            Project.findByIdAndUpdate(req.params.id, updateProject, function (
+                err,
+                Project
+            ) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(updateProject);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+
+app.delete("/api/admin/project-bid/:id", verifyAdmin, (req, res) => {
+    Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+        if (err) {
+            console.log("error");
+            res.send("err");
+        } else {
+            console.log("project deleted");
+            res.send(project);
+        }
+    });
+    console.log("delete");
+    console.log(req.params.id);
+});
+
+/////////////////////////////////////
+//////   HR                      ////
+/////////////////////////////////////
+
+app.get("/api/country", verifyHR, (req, res) => {
+    Country.find()
+        .populate({ path: "states", populate: { path: "cities" } })
+        .exec(function (err, country) {
+            res.send(country);
+        });
+});
+
+app.post("/api/country", verifyHR, (req, res) => {
+    Joi.validate(req.body, CountryValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newCountry;
+
+            newCountry = {
+                CountryName: req.body.CountryName
+            };
+
+            Country.create(newCountry, function (err, country) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    res.send(country);
+                    console.log("new country Saved");
+                }
+            });
+            console.log(req.body);
+        }
+    });
+});
+
+app.put("/api/country/:id", verifyHR, (req, res) => {
+    Joi.validate(req.body, CountryValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newCountry;
+
+            newCountry = {
+                CountryName: req.body.CountryName
+            };
+            Country.findByIdAndUpdate(req.params.id, newCountry, function (
+                err,
+                country
+            ) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(newCountry);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+
+app.delete("/api/country/:id", verifyHR, (req, res) => {
+    Country.findById(req.params.id, function (err, foundCountry) {
+        if (err) {
+            res.send(err);
+        } else {
+            console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", foundCountry);
+            if (!foundCountry.states.length == 0) {
+                res
+                    .status(403)
+                    .send(
+                        "First Delete All The states in this country before deleting this country"
+                    );
+            } else {
+                Country.findByIdAndRemove({ _id: req.params.id }, function (
+                    err,
+                    country
+                ) {
+                    if (!err) {
+                        State.deleteMany({ country: { _id: req.params.id } }, function (
+                            err
+                        ) {
+                            if (err) {
+                                console.log(err);
+                                res.send("error");
+                            } else {
+                                City.deleteMany(
+                                    { state: { country: { _id: req.params.id } } },
+                                    function (err) {
+                                        if (err) {
+                                            console.log(err);
+                                            res.send("error");
+                                        } else {
+                                            console.log(" Country deleted");
+                                            res.send(country);
+                                        }
+                                    }
+                                );
+                            }
+                        });
+                    } else {
+                        console.log(err);
+                        res.send("error");
+                    }
+                });
+            }
+        }
+    });
+
+    console.log("delete");
+    console.log(req.params.id);
+});
+
+app.get("/api/state", verifyHR, (req, res) => {
+    State.find()
+        .populate("country citiesx")
+        .exec(function (err, country) {
+            res.send(country);
+        });
+});
+//State
+app.post("/api/state", verifyHR, (req, res) => {
+    Joi.validate(req.body, StateValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newState;
+
+            newState = {
+                StateName: req.body.StateName,
+                country: req.body.CountryID
+            };
+
+            State.create(newState, function (err, state) {
+                if (err) {
+                    console.log(err);
+                    res.send("error");
+                } else {
+                    Country.findById(req.body.CountryID, function (err, country) {
+                        if (err) {
+                            console.log(err);
+                            res.send("err");
+                        } else {
+                            country.states.push(state);
+                            country.save(function (err, data) {
+                                if (err) {
+                                    console.log(err);
+                                    res.send("err");
+                                } else {
+                                    console.log(data);
+                                    res.send(state);
+                                }
+                            });
+                        }
+                    });
+                    console.log("new country Saved");
+                }
+            });
+            console.log(req.body);
+        }
+    });
+});
+//State
+//state
+app.put("/api/state/:id", verifyHR, (req, res) => {
+    Joi.validate(req.body, StateValidation, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err.details[0].message);
+        } else {
+            let newState;
+
+            newState = {
+                StateName: req.body.StateName,
+                country: req.body.CountryID
+            };
+
+            State.findByIdAndUpdate(req.params.id, newState, function (err, state) {
+                if (err) {
+                    res.send("error");
+                } else {
+                    res.send(newState);
+                }
+            });
+        }
+
+        console.log("put");
+        console.log(req.body);
+    });
+});
+
+app.delete("/api/state/:id", verifyHR, (req, res) => {
+    State.findById(req.params.id, function (err, foundState) {
+        if (err) {
+            res.send(err);
+        } else {
+            // console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", foundCountry);
+            if (!foundState.cities.length == 0) {
+                res
+                    .status(403)
+                    .send(
+                        "First Delete All The cities in this state before deleting this state"
+                    );
+            } else {
+                State.findByIdAndRemove({ _id: req.params.id }, function (err, state) {
+                    if (!err) {
+                        console.log(" state deleted");
+                        console.log("country id---------", state.country[0]);
+                        Country.update(
+                            { _id: state.country[0] },
+                            { $pull: { states: state._id } },
+                            function (err, numberAffected) {
+                                console.log(numberAffected);
+                                res.send(state);
+                            }
+                        );
+                    } else {
+                        console.log(err);
+                        res.send("error");
+                    }
+                });
+            }
+        }
+    });
+
+    console.log("delete");
+    console.log(req.params.id);
+});
