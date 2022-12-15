@@ -1325,3 +1325,1187 @@ app.delete("/api/state/:id", verifyHR, (req, res) => {
     console.log("delete");
     console.log(req.params.id);
 });
+app.get("/api/city", verifyHR, (req, res) => {
+  City.find()
+      .populate({ path: "state", populate: { path: "country" } })
+      .exec(function (err, city) {
+        // employee = employees;
+        res.send(city);
+      });
+});
+app.post("/api/city", verifyHR, (req, res) => {
+  Joi.validate(req.body, CityValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newCity;
+
+      newCity = {
+        CityName: req.body.CityName,
+        state: req.body.StateID
+      };
+
+      City.create(newCity, function (err, city) {
+        if (err) {
+          console.log(err);
+          res.send("error");
+        } else {
+          State.findById(req.body.StateID, function (err, state) {
+            if (err) {
+              console.log(err);
+              res.send("err");
+            } else {
+              state.cities.push(city);
+              state.save(function (err, data) {
+                if (err) {
+                  console.log(err);
+                  res.send("err");
+                } else {
+                  console.log(data);
+                  res.send(city);
+                }
+              });
+            }
+          });
+
+          console.log("new city Saved");
+        }
+      });
+      console.log(req.body);
+    }
+  });
+});
+app.put("/api/city/:id", verifyHR, (req, res) => {
+  Joi.validate(req.body, CityValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newCity;
+
+      newCity = {
+        CityName: req.body.CityName,
+        state: req.body.StateID
+      };
+
+      City.findByIdAndUpdate(req.params.id, newCity, function (err, city) {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(newCity);
+        }
+      });
+    }
+
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete("/api/city/:id", verifyHR, (req, res) => {
+  Company.find({ city: req.params.id }, function (err, country) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      console.log(country.length == 0);
+      if (country.length == 0) {
+        City.findByIdAndRemove({ _id: req.params.id }, function (err, city) {
+          if (!err) {
+            console.log(" state deleted");
+            State.update(
+                { _id: city.state[0] },
+                { $pull: { cities: city._id } },
+                function (err, numberAffected) {
+                  console.log(numberAffected);
+                  res.send(city);
+                }
+            );
+          } else {
+            console.log(err);
+            res.send("error");
+          }
+        });
+      } else {
+        res
+            .status(403)
+            .send(
+                "This city is associated with company so you can not delete this"
+            );
+      }
+    }
+  });
+
+  console.log("delete");
+  console.log(req.params.id);
+});
+
+///////////////////////////
+////////////company
+
+app.get("/api/company", verifyAdminHR, (req, res) => {
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  Company.find()
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "city",
+        populate: {
+          path: "state",
+          model: "State",
+          populate: {
+            path: "country",
+            model: "Country"
+          }
+        }
+      })
+      .exec(function (err, compnay) {
+        res.send(compnay);
+      });
+});
+app.post("/api/company", verifyHR, (req, res) => {
+  Joi.validate(req.body, CompanyValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newCompany;
+
+      newCompany = {
+        CompanyName: req.body.CompanyName,
+        Address: req.body.Address,
+        city: req.body.CityID,
+        PostalCode: req.body.PostalCode,
+        Website: req.body.Website,
+        Email: req.body.Email,
+        ContactPerson: req.body.ContactPerson,
+        ContactNo: req.body.ContactNo,
+        FaxNo: req.body.FaxNo,
+        PanNo: req.body.PanNo,
+        GSTNo: req.body.GSTNo,
+        CINNo: req.body.CINNo
+      };
+
+      Company.create(newCompany, function (err, company) {
+        if (err) {
+          console.log(err);
+          res.send("error");
+        } else {
+          res.send(newCompany);
+          console.log("new company Saved");
+        }
+      });
+      console.log(req.body);
+    }
+  });
+});
+app.put("/api/company/:id", verifyHR, (req, res) => {
+  Joi.validate(req.body, CompanyValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newCompany;
+
+      newCompany = {
+        CompanyName: req.body.CompanyName,
+        Address: req.body.Address,
+        city: req.body.CityID,
+        PostalCode: req.body.PostalCode,
+        Website: req.body.Website,
+        Email: req.body.Email,
+        ContactPerson: req.body.ContactPerson,
+        ContactNo: req.body.ContactNo,
+        FaxNo: req.body.FaxNo,
+        PanNo: req.body.PanNo,
+        GSTNo: req.body.GSTNo,
+        CINNo: req.body.CINNo
+      };
+
+      Company.findByIdAndUpdate(req.params.id, newCompany, function (
+          err,
+          company
+      ) {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(newCompany);
+        }
+      });
+    }
+
+    console.log("put");
+    console.log(req.body);
+  });
+});
+/////////////////////////////////
+/////////////////////Employee
+
+app.get("/api/employee", verifyHR, (req, res) => {
+  // {path: 'projects', populate: {path: 'portals'}}
+  Employee.find()
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "role position department"
+        // populate: {
+        //   path: "state",
+        //   model: "State",
+        //   populate: {
+        //     path: "country",
+        //     model: "Country"
+        //   }
+        // }
+      })
+      .select("-salary -education -familyInfo -workExperience -Password")
+      .exec(function (err, employee) {
+        res.send(employee);
+      });
+});
+
+app.post("/api/employee", verifyHR, (req, res) => {
+  Joi.validate(req.body, EmployeeValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newEmployee;
+
+      newEmployee = {
+        Email: req.body.Email,
+        Password: req.body.Password,
+        role: req.body.RoleID,
+        Account: req.body.Account,
+        Gender: req.body.Gender,
+        FirstName: req.body.FirstName,
+        MiddleName: req.body.MiddleName,
+        LastName: req.body.LastName,
+        DOB: req.body.DOB,
+        ContactNo: req.body.ContactNo,
+        EmployeeCode: req.body.EmployeeCode,
+        department: req.body.DepartmentID,
+        position: req.body.PositionID,
+        DateOfJoining: req.body.DateOfJoining,
+        TerminateDate: req.body.TerminateDate
+      };
+
+      Employee.create(newEmployee, function (err, employee) {
+        if (err) {
+          console.log(err);
+          res.send("error");
+        } else {
+          res.send(employee);
+
+          console.log("new employee Saved");
+        }
+      });
+      console.log(req.body);
+    }
+  });
+});
+
+app.put("/api/employee/:id", verifyHR, (req, res) => {
+  Joi.validate(req.body, EmployeeValidationUpdate, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newEmployee;
+      newEmployee = {
+        Email: req.body.Email,
+        // Password: req.body.Password,
+        Account: req.body.Account,
+        role: req.body.RoleID,
+        Gender: req.body.Gender,
+        FirstName: req.body.FirstName,
+        MiddleName: req.body.MiddleName,
+        LastName: req.body.LastName,
+        DOB: req.body.DOB,
+        ContactNo: req.body.ContactNo,
+        EmployeeCode: req.body.EmployeeCode,
+        department: req.body.DepartmentID,
+        position: req.body.PositionID,
+        DateOfJoining: req.body.DateOfJoining,
+        TerminateDate: req.body.TerminateDate
+      };
+
+      Employee.findByIdAndUpdate(req.params.id, newEmployee, function (
+          err,
+          employee
+      ) {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(newEmployee);
+        }
+      });
+    }
+
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete("/api/employee/:id", verifyHR, (req, res) => {
+  // Employee.findByIdAndRemove({ _id: req.params.id }, function (err, employee) {
+  //   if (!err) {
+  //     console.log(" state deleted");
+  //     res.send(employee);
+  //   } else {
+  //     console.log(err);
+  //     res.send("error");
+  //   }
+  // });
+  res.send("error");
+  console.log("delete");
+  console.log(req.params.id);
+});
+
+////////////////////////////////
+//////////////////salary
+app.get("/api/salary", verifyHR, (req, res) => {
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  Employee.find()
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "salary"
+        // populate: {
+        //   path: "state",
+        //   model: "State",
+        //   populate: {
+        //     path: "country",
+        //     model: "Country"
+        //   }
+        // }
+      })
+      // .select(" -role -position -department")
+      .select("FirstName LastName MiddleName")
+      .exec(function (err, company) {
+        // employee = employees;
+        let filteredCompany = company.filter(data => data["salary"].length == 1);
+        // console.log(filteredCompany);
+        res.send(filteredCompany);
+      });
+});
+
+app.post("/api/salary/:id", verifyHR, (req, res) => {
+  Joi.validate(req.body, SalaryValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      Employee.findById(req.params.id, function (err, employee) {
+        if (err) {
+          console.log(err);
+          res.send("err");
+        } else {
+          if (employee.salary.length == 0) {
+            let newSalary;
+
+            newSalary = {
+              BasicSalary: req.body.BasicSalary,
+              BankName: req.body.BankName,
+              AccountNo: req.body.AccountNo,
+              AccountHolderName: req.body.AccountHolderName,
+              IFSCcode: req.body.IFSCcode,
+              TaxDeduction: req.body.TaxDeduction
+            };
+
+            Salary.create(newSalary, function (err, salary) {
+              if (err) {
+                console.log(err);
+                res.send("error");
+              } else {
+                employee.salary.push(salary);
+                employee.save(function (err, data) {
+                  if (err) {
+                    console.log(err);
+                    res.send("err");
+                  } else {
+                    console.log(data);
+                    res.send(salary);
+                  }
+                });
+                console.log("new salary Saved");
+              }
+            });
+            console.log(req.body);
+          } else {
+            res
+                .status(403)
+                .send("Salary Information about this employee already exits");
+          }
+        }
+      });
+    }
+  });
+});
+
+app.put("/api/salary/:id", verifyHR, (req, res) => {
+  Joi.validate(req.body, SalaryValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newSalary;
+
+      newSalary = {
+        BasicSalary: req.body.BasicSalary,
+        BankName: req.body.BankName,
+        AccountNo: req.body.AccountNo,
+        AccountHolderName: req.body.AccountHolderName,
+        IFSCcode: req.body.IFSCcode,
+        TaxDeduction: req.body.TaxDeduction
+      };
+
+      Salary.findByIdAndUpdate(req.params.id, newSalary, function (err, salary) {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(newSalary);
+        }
+      });
+    }
+
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete("/api/salary/:id", verifyHR, (req, res) => {
+  Employee.findById({ _id: req.params.id }, function (err, employee) {
+    console.log("uuuuuuuunnnnnnnnnnnnnnndef", employee.salary[0]);
+    if (err) {
+      res.send("error");
+      console.log(err);
+    } else {
+      Salary.findByIdAndRemove({ _id: employee.salary[0] }, function (
+          err,
+          salary
+      ) {
+        if (!err) {
+          console.log("salary deleted");
+          Employee.update(
+              { _id: req.params.id },
+              { $pull: { salary: employee.salary[0] } },
+              function (err, numberAffected) {
+                console.log(numberAffected);
+                res.send(salary);
+              }
+          );
+        } else {
+          console.log(err);
+          res.send("error");
+        }
+      });
+      console.log("delete");
+      console.log(req.params.id);
+    }
+  });
+});
+
+//////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////Employee dashboard
+/////////////////////////////////////
+/////////////////////////////////////
+
+////////////////////////////////////
+////////////////////////////personal info
+
+app.get("/api/personal-info/:id", verifyHREmployee, (req, res) => {
+  console.log("personal-info", req.params.id);
+  Employee.findById(req.params.id)
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "role position department"
+        //   // populate: {
+        //   //   path: "state",
+        //   //   model: "State",
+        //   //   populate: {
+        //   //     path: "country",
+        //   //     model: "Country"
+        //   //   }
+        //   // }
+      })
+      .select("-salary -education -familyInfo -workExperience")
+      .exec(function (err, employee) {
+        // employee = employees;
+        res.send(employee);
+      });
+});
+
+app.put("/api/personal-info/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, EmployeePersonalInfoValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newEmployee;
+
+      newEmployee = {
+        BloodGroup: req.body.BloodGroup,
+        ContactNo: req.body.ContactNo,
+        DOB: req.body.DOB,
+        Email: req.body.Email,
+        EmergencyContactNo: req.body.EmergencyContactNo,
+        Gender: req.body.Gender,
+        Hobbies: req.body.Hobbies,
+        PANcardNo: req.body.PANcardNo,
+        PermanetAddress: req.body.PermanetAddress,
+        PresentAddress: req.body.PresentAddress
+      };
+      Employee.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: newEmployee
+          },
+          function (err, numberAffected) {
+            console.log(numberAffected);
+            res.send(newEmployee);
+          }
+      );
+    }
+
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+////////////////////////////////
+////////////////////education
+app.get("/api/education/:id", verifyHREmployee, (req, res) => {
+  console.log(req.params.id);
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  Employee.findById(req.params.id)
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "education"
+        // populate: {
+        //   path: "state",
+        //   model: "State",
+        //   populate: {
+        //     path: "country",
+        //     model: "Country"
+        //   }
+        // }
+      })
+      // .select(" -role -position -department")
+      .select("FirstName LastName MiddleName")
+      .exec(function (err, employee) {
+        // console.log(filteredCompany);
+        res.send(employee);
+      });
+});
+
+app.post("/api/education/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, EducationValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      Employee.findById(req.params.id, function (err, employee) {
+        if (err) {
+          console.log(err);
+          res.send("err");
+        } else {
+          let newEducation;
+
+          newEducation = {
+            SchoolUniversity: req.body.SchoolUniversity,
+            Degree: req.body.Degree,
+            Grade: req.body.Grade,
+            PassingOfYear: req.body.PassingOfYear
+          };
+
+          Education.create(newEducation, function (err, education) {
+            if (err) {
+              console.log(err);
+              res.send("error");
+            } else {
+              employee.education.push(education);
+              employee.save(function (err, data) {
+                if (err) {
+                  console.log(err);
+                  res.send("err");
+                } else {
+                  console.log(data);
+                  res.send(education);
+                }
+              });
+              console.log("new Education Saved");
+            }
+          });
+          console.log(req.body);
+        }
+      });
+    }
+  });
+});
+
+app.put("/api/education/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, EducationValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newEducation;
+
+      newEducation = {
+        SchoolUniversity: req.body.SchoolUniversity,
+        Degree: req.body.Degree,
+        Grade: req.body.Grade,
+        PassingOfYear: req.body.PassingOfYear
+      };
+
+      Education.findByIdAndUpdate(req.params.id, newEducation, function (
+          err,
+          education
+      ) {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(newEducation);
+        }
+      });
+    }
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete("/api/education/:id/:id2", verifyEmployee, (req, res) => {
+  Employee.findById({ _id: req.params.id }, function (err, employee) {
+    if (err) {
+      res.send("error");
+      console.log(err);
+    } else {
+      Education.findByIdAndRemove({ _id: req.params.id2 }, function (
+          err,
+          education
+      ) {
+        if (!err) {
+          console.log("education deleted");
+          Employee.update(
+              { _id: req.params.id },
+              { $pull: { education: req.params.id2 } },
+              function (err, numberAffected) {
+                console.log(numberAffected);
+                res.send(education);
+              }
+          );
+        } else {
+          console.log(err);
+          res.send("error");
+        }
+      });
+      console.log("delete");
+      console.log(req.params.id);
+    }
+  });
+});
+
+//////////////////////////////////
+//////////////////////////familyInfo
+app.get("/api/family-info/:id", verifyHREmployee, (req, res) => {
+  console.log(req.params.id);
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  Employee.findById(req.params.id)
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "familyInfo"
+        // populate: {
+        //   path: "state",
+        //   model: "State",
+        //   populate: {
+        //     path: "country",
+        //     model: "Country"
+        //   }
+        // }
+      })
+      // .select(" -role -position -department")
+      .select("FirstName LastName MiddleName")
+      .exec(function (err, employee) {
+        // console.log(filteredCompany);
+        res.send(employee);
+      });
+});
+
+app.post("/api/family-info/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, FamilyInfoValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      Employee.findById(req.params.id, function (err, employee) {
+        if (err) {
+          console.log(err);
+          res.send("err");
+        } else {
+          let newFamilyInfo;
+
+          newFamilyInfo = {
+            Name: req.body.Name,
+            Relationship: req.body.Relationship,
+            DOB: req.body.DOB,
+            Occupation: req.body.Occupation
+          };
+
+          FamilyInfo.create(newFamilyInfo, function (err, familyInfo) {
+            if (err) {
+              console.log(err);
+              res.send("error");
+            } else {
+              employee.familyInfo.push(familyInfo);
+              employee.save(function (err, data) {
+                if (err) {
+                  console.log(err);
+                  res.send("err");
+                } else {
+                  console.log(data);
+                  res.send(familyInfo);
+                }
+              });
+              console.log("new familyInfo Saved");
+            }
+          });
+          console.log(req.body);
+        }
+      });
+    }
+  });
+});
+
+app.put("/api/family-info/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, FamilyInfoValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newFamilyInfo;
+
+      newFamilyInfo = {
+        Name: req.body.Name,
+        Relationship: req.body.Relationship,
+        DOB: req.body.DOB,
+        Occupation: req.body.Occupation
+      };
+
+      FamilyInfo.findByIdAndUpdate(req.params.id, newFamilyInfo, function (
+          err,
+          familyInfo
+      ) {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(newFamilyInfo);
+        }
+      });
+    }
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete("/api/family-info/:id/:id2", verifyEmployee, (req, res) => {
+  Employee.findById({ _id: req.params.id }, function (err, employee) {
+    if (err) {
+      res.send("error");
+      console.log(err);
+    } else {
+      FamilyInfo.findByIdAndRemove({ _id: req.params.id2 }, function (
+          err,
+          familyInfo
+      ) {
+        if (!err) {
+          console.log("FamilyInfo deleted");
+          Employee.update(
+              { _id: req.params.id },
+              { $pull: { familyInfo: req.params.id2 } },
+              function (err, numberAffected) {
+                console.log(numberAffected);
+                res.send(familyInfo);
+              }
+          );
+        } else {
+          console.log(err);
+          res.send("error");
+        }
+      });
+      console.log("delete");
+      console.log(req.params.id);
+    }
+  });
+});
+
+//////////////////////////////////
+//////////////////////////WorkExperience workExperience
+app.get("/api/work-experience/:id", verifyHREmployee, (req, res) => {
+  console.log(req.params.id);
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  Employee.findById(req.params.id)
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "workExperience"
+        // populate: {
+        //   path: "state",
+        //   model: "State",
+        //   populate: {
+        //     path: "country",
+        //     model: "Country"
+        //   }
+        // }
+      })
+      // .select(" -role -position -department")
+      .select("FirstName LastName MiddleName")
+      .exec(function (err, employee) {
+        res.send(employee);
+      });
+});
+
+app.post("/api/work-experience/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, WorkExperienceValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      Employee.findById(req.params.id, function (err, employee) {
+        if (err) {
+          console.log(err);
+          res.send("err");
+        } else {
+          let newWorkExperience;
+
+          newWorkExperience = {
+            CompanyName: req.body.CompanyName,
+            Designation: req.body.Designation,
+            FromDate: req.body.FromDate,
+            ToDate: req.body.ToDate
+          };
+
+          WorkExperience.create(newWorkExperience, function (
+              err,
+              workExperience
+          ) {
+            if (err) {
+              console.log(err);
+              res.send("error");
+            } else {
+              employee.workExperience.push(workExperience);
+              employee.save(function (err, data) {
+                if (err) {
+                  console.log(err);
+                  res.send("err");
+                } else {
+                  console.log(data);
+                  res.send(workExperience);
+                }
+              });
+              console.log("new WorkExperience Saved");
+            }
+          });
+          console.log(req.body);
+        }
+      });
+    }
+  });
+});
+
+app.put("/api/work-experience/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, WorkExperienceValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newWorkExperience;
+
+      newWorkExperience = {
+        CompanyName: req.body.CompanyName,
+        Designation: req.body.Designation,
+        FromDate: req.body.FromDate,
+        ToDate: req.body.ToDate
+      };
+
+      WorkExperience.findByIdAndUpdate(
+          req.params.id,
+          newWorkExperience,
+          function (err, workExperience) {
+            if (err) {
+              res.send("error");
+            } else {
+              res.send(newWorkExperience);
+            }
+          }
+      );
+    }
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete("/api/Work-experience/:id/:id2", verifyEmployee, (req, res) => {
+  Employee.findById({ _id: req.params.id }, function (err, employee) {
+    if (err) {
+      res.send("error");
+      console.log(err);
+    } else {
+      WorkExperience.findByIdAndRemove({ _id: req.params.id2 }, function (
+          err,
+          workExperience
+      ) {
+        if (!err) {
+          console.log("WorkExperience deleted");
+          Employee.update(
+              { _id: req.params.id },
+              { $pull: { workExperience: req.params.id2 } },
+              function (err, numberAffected) {
+                console.log(numberAffected);
+                res.send(workExperience);
+              }
+          );
+        } else {
+          console.log(err);
+          res.send("error");
+        }
+      });
+      console.log("delete");
+      console.log(req.params.id);
+    }
+  });
+});
+
+/////////////////////
+////////////LeaveApplication leaveApplication leave-application-emp
+app.get("/api/leave-application-emp/:id", verifyEmployee, (req, res) => {
+  console.log(req.params.id);
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  Employee.findById(req.params.id)
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "leaveApplication"
+        // populate: {
+        //   path: "state",
+        //   model: "State",
+        //   populate: {
+        //     path: "country",
+        //     model: "Country"
+        //   }
+        // }
+      })
+      // .select(" -role -position -department")
+      .select("FirstName LastName MiddleName")
+      .exec(function (err, employee) {
+        // console.log(filteredCompany);
+        if (err) {
+          console.log(err);
+          res.send("error");
+        } else {
+          res.send(employee);
+        }
+      });
+});
+
+app.post("/api/leave-application-emp/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, LeaveApplicationValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      Employee.findById(req.params.id, function (err, employee) {
+        if (err) {
+          console.log(err);
+          res.send("err");
+        } else {
+          let newLeaveApplication;
+          newLeaveApplication = {
+            Leavetype: req.body.Leavetype,
+            FromDate: req.body.FromDate,
+            ToDate: req.body.ToDate,
+            Reasonforleave: req.body.Reasonforleave,
+            Status: req.body.Status,
+            employee: req.params.id
+          };
+
+          LeaveApplication.create(newLeaveApplication, function (
+              err,
+              leaveApplication
+          ) {
+            if (err) {
+              console.log(err);
+              res.send("error");
+            } else {
+              employee.leaveApplication.push(leaveApplication);
+              employee.save(function (err, data) {
+                if (err) {
+                  console.log(err);
+                  res.send("err");
+                } else {
+                  console.log(data);
+                  res.send(leaveApplication);
+                }
+              });
+              console.log("new leaveApplication Saved");
+            }
+          });
+          console.log(req.body);
+        }
+      });
+    }
+  });
+});
+
+app.put("/api/leave-application-emp/:id", verifyEmployee, (req, res) => {
+  Joi.validate(req.body, LeaveApplicationValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newLeaveApplication;
+
+      newLeaveApplication = {
+        Leavetype: req.body.Leavetype,
+        FromDate: req.body.FromDate,
+        ToDate: req.body.ToDate,
+        Reasonforleave: req.body.Reasonforleave,
+        Status: req.body.Status,
+        employee: req.params.id
+      };
+
+      LeaveApplication.findByIdAndUpdate(
+          req.params.id,
+          newLeaveApplication,
+          function (err, leaveApplication) {
+            if (err) {
+              res.send("error");
+            } else {
+              res.send(newLeaveApplication);
+            }
+          }
+      );
+    }
+    console.log("put");
+    console.log(req.body);
+  });
+});
+
+app.delete(
+    "/api/leave-application-emp/:id/:id2",
+    verifyEmployee,
+    (req, res) => {
+      Employee.findById({ _id: req.params.id }, function (err, employee) {
+        if (err) {
+          res.send("error");
+          console.log(err);
+        } else {
+          LeaveApplication.findByIdAndRemove({ _id: req.params.id2 }, function (
+              err,
+              leaveApplication
+          ) {
+            if (!err) {
+              console.log("LeaveApplication deleted");
+              Employee.update(
+                  { _id: req.params.id },
+                  { $pull: { leaveApplication: req.params.id2 } },
+                  function (err, numberAffected) {
+                    console.log(numberAffected);
+                    res.send(leaveApplication);
+                  }
+              );
+            } else {
+              console.log(err);
+              res.send("error");
+            }
+          });
+          console.log("delete");
+          console.log(req.params.id);
+        }
+      });
+    }
+);
+
+/////////////////////
+////////////LeaveApplication leaveApplication HHHHHHRRRRR
+app.get("/api/leave-application-hr", verifyHR, (req, res) => {
+  // var employee = {};
+  // {path: 'projects', populate: {path: 'portals'}}
+  LeaveApplication.find()
+      // .populate({ path: "city", populate: { path: "state" } ,populate: { populate: { path: "country" } } })
+      .populate({
+        path: "employee"
+      })
+      // .select(" -role -position -department")
+      // .select("FirstName LastName MiddleName"
+      // )
+      .exec(function (err, leaveApplication) {
+        // console.log(filteredCompany);
+        if (err) {
+          console.log(err);
+          res.send("error");
+        } else {
+          res.send(leaveApplication);
+        }
+      });
+});
+
+app.put("/api/leave-application-hr/:id", verifyHR, (req, res) => {
+  Joi.validate(req.body, LeaveApplicationHRValidation, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err.details[0].message);
+    } else {
+      let newLeaveApplication;
+
+      newLeaveApplication = {
+        Status: req.body.Status
+      };
+      LeaveApplication.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: newLeaveApplication
+          },
+          function (err, numberAffected) {
+            console.log(numberAffected);
+            res.send(newLeaveApplication);
+          }
+      );
+
+      console.log(req.body);
+    }
+  });
+});
+
+app.delete("/api/leave-application-hr/:id/:id2", verifyHR, (req, res) => {
+  Employee.findById({ _id: req.params.id }, function (err, employee) {
+    if (err) {
+      res.send("error");
+      console.log(err);
+    } else {
+      LeaveApplication.findByIdAndRemove({ _id: req.params.id2 }, function (
+          err,
+          leaveApplication
+      ) {
+        if (!err) {
+          console.log("LeaveApplication deleted");
+          Employee.update(
+              { _id: req.params.id },
+              { $pull: { leaveApplication: req.params.id2 } },
+              function (err, numberAffected) {
+                console.log(numberAffected);
+                res.send(leaveApplication);
+              }
+          );
+        } else {
+          console.log(err);
+          res.send("error");
+        }
+      });
+      console.log("delete");
+      console.log(req.params.id);
+    }
+  });
+});
