@@ -1,6 +1,6 @@
-const mongoose = require("mongoose"),
-    autoIncrement = require("mongoose-auto-increment"),
-    Joi = require("joi")
+const mongoose = require("mongoose")
+const autoIncrement = require("mongoose-auto-increment")
+
 
 const employeeSchema = new mongoose.Schema({
     FirstName: { type: String, required: true },
@@ -36,9 +36,15 @@ const employeeSchema = new mongoose.Schema({
     PermanetAddress: { type: String },
     PresentAddress: { type: String }
 });
+
+const conn = mongoose.createConnection('mongodb+srv://ngocdiemxt2001:138200113@cluster0.rk8c2nn.mongodb.net/test?retryWrites=true&w=majority');
+autoIncrement.initialize(conn);
+
 employeeSchema.plugin(autoIncrement.plugin, {
     model: "Employee",
     field: "EmployeeID"
 });
 
 const Employee = mongoose.model("Employee", employeeSchema);
+
+module.exports = Employee

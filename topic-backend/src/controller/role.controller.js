@@ -3,14 +3,16 @@ const {Role} = require('../model/Role');
 const {Employee} = require('../model/Employee')
 const {RoleValidation} = require('../middleware/RoleValidation');
 
-export const findAll = async (req, res) => {
-    Role.find()
-        .populate('company')
-        .exec(function (err, role) {
-            res.send(role);
-        });
+const findAll = async (req, res) => {
+    // Role.find()
+    //     .populate('company')
+    //     .exec(function (err, role) {
+    //         res.send(role);
+    //     });
+    const users = await Role.find({});
+    res.status(200).send(users);
 }
-export const addRole = async (req, res) => {
+const addRole = async (req, res) => {
     Joi.validate(req.body, RoleValidation, (err, result) => {
         if (err) {
             console.log(err);
@@ -38,7 +40,7 @@ export const addRole = async (req, res) => {
     });
 }
 
-export const updateRole = async (req, res) => {
+const updateRole = async (req, res) => {
     Joi.validate(req.body, RoleValidation, (err, result) => {
         if (err) {
             console.log(err);
@@ -65,7 +67,7 @@ export const updateRole = async (req, res) => {
     });
 
 }
-export const deleteRole = async (req, res) => {
+const deleteRole = async (req, res) => {
     Employee.find({role: req.params.id}, function (err, r) {
         if (err) {
             console.log(err);
@@ -93,4 +95,9 @@ export const deleteRole = async (req, res) => {
         }
     });
 }
-
+module.exports = {
+    deleteRole,
+    findAll,
+    updateRole,
+    addRole
+}
