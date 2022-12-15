@@ -11,7 +11,8 @@ jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 //connecting to mongodb
-let mongoURI = process.env.DATABASEURL;
+// let mongoURI = process.env.DATABASEURL;
+let mongoURI ='mongodb+srv://ngocdiemxt2001:138200113@cluster0.rk8c2nn.mongodb.net/test?retryWrites=true&w=majority';
 //setting up jwt token
 let jwtKey = process.env.JWTKEY;
 
@@ -36,17 +37,20 @@ mongoose
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
 autoIncrement.initialize(conn);
+
+// autoIncrement.initialize(mongoose.connection);
+
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 //for request body
 app.use(express.json());
 
-app.use("/", UserRoute)
-app.use("/", LoginRoute)
-app.use("/", RoleRoute)
+app.use("/", UserRoute);
+app.use("/", LoginRoute);
+app.use("/", RoleRoute);
 
-const port = process.env.PORT;
-if (port && process.env.IP) {
+const port = 4000;
+if (port) {
     app.listen(port, process.env.IP, () => {
         console.log('started');
     });

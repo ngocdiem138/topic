@@ -1,11 +1,10 @@
 const Joi = require('joi')
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const {Employee} = require('../model/Employee');
-const { verifyAdminHR } = require('../middleware/Middleware');
+const { Employee } = require('../model/Employee.js');
 let jwtKey = process.env.JWTKEY;
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
     Joi.validate(
         req.body,
         Joi.object().keys({
@@ -46,4 +45,7 @@ export const login = async (req, res) => {
             }
         }
     );
+}
+module.exports = {
+    login
 }
