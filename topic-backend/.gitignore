@@ -2,3 +2,8 @@
 config.js
 jwtKey.js
 .env
+/.idea/.gitignore
+/.idea/git_toolbox_prj.xml
+/.idea/modules.xml
+/.idea/topic-backend.iml
+/.idea/vcs.xml
