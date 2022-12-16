@@ -6,10 +6,6 @@ import { Redirect } from "react-router-dom";
 
 import Role from "../Role.jsx";
 import NavBar from "../NavBar.jsx";
-import RoleForm from "../RoleForm.jsx";
-import Position from "../Position.jsx";
-import Department from "../Department.jsx";
-import AdminPortal from "./AdminPortal.jsx";
 import AdminProjectBid from "./AdminProjectBid.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
@@ -26,19 +22,6 @@ import {
 
 function RoleAdminF() {
   return <Role />;
-}
-function RoleFormF() {
-  return <RoleForm />;
-}
-
-function PositionF() {
-  return <Position />;
-}
-function DepartmentF() {
-  return <Department />;
-}
-function AdminPortalF() {
-  return <AdminPortal />;
 }
 function AdminProjectBidF() {
   return <AdminProjectBid />;
@@ -82,27 +65,6 @@ class DashboardTeacher extends Component {
                 Teacher
               </div>
               <ul className="navbar-ul">
-                {/* <li>
-                  <Link to="/admin/role">
-                    <FontAwesomeIcon icon={faUsers} className="sidebar-icon" /> 
-                    Role 
-                  </Link> 
-                </li>
-                <li>
-                  <Link to="/admin/position">
-                    <FontAwesomeIcon icon={faChair} className="sidebar-icon" /> 
-                    Position 
-                  </Link> 
-                </li> 
-                  <Link to="/admin/department">
-                    <FontAwesomeIcon
-                      icon={faBuilding}
-                      className="sidebar-icon"
-                    /> 
-                    Department 
-                  </Link> 
-                </li>
-                <li>*/}
                 <li>
                   <Link to="/admin/project-bid">
                     <FontAwesomeIcon
@@ -112,13 +74,6 @@ class DashboardTeacher extends Component {
                     List Topic
                   </Link> 
                 </li>
-                {/* <li>
-                  <Link to="/admin/portal-master">
-                    <FontAwesomeIcon icon={faTasks} className="sidebar-icon" /> 
-                    Portal Master 
-                  </Link> 
-                </li> */}
-                
               </ul>
             </div>
             {/* <div id="sidebar-top-content" /> */}
@@ -129,21 +84,7 @@ class DashboardTeacher extends Component {
               <Switch>
                 <Route exact path="/admin/project-bid" component={AdminProjectBidF} />
                 {/* <Route path="/admin/role/form" exact component={RoleFormF} /> */}
-                <Route
-                  path="/admin/position"
-                  exact
-                  component={PositionF}
-                />
-                <Route
-                  path="/admin/department"
-                  exact
-                  component={DepartmentF}
-                />
-                 <Route
-                  path="/admin/portal-master"
-                  exact
-                  component={AdminPortalF}
-                />
+                 
                  <Route
                   path="/admin/project-bid"
                   exact
