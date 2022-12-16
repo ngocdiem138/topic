@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const { Role } = require('../model/Role');
-const { Employee } = require('../model/Employee');
+const { Student } = require('../model/Student');
 const { RoleValidation } = require('../middleware/RoleValidation');
 
 const findAll = async (req, res) => {
@@ -16,8 +16,7 @@ const addRole = async (req, res) => {
     } else {
       let newRole;
       newRole = {
-        RoleName: req.body.RoleName,
-        company: req.body.CompanyID
+        RoleName: req.body.RoleName
       };
       Role.create(newRole, function (err, role) {
         if (err) {
@@ -42,8 +41,7 @@ const updateRole = async (req, res) => {
     } else {
       let updateRole;
       updateRole = {
-        RoleName: req.body.RoleName,
-        company: req.body.CompanyID
+        RoleName: req.body.RoleName
       };
       Role.findByIdAndUpdate(req.params.id, updateRole, function (err, role) {
         if (err) {
@@ -60,7 +58,7 @@ const updateRole = async (req, res) => {
 };
 
 const deleteRole = async (req, res) => {
-  Employee.find({ role: req.params.id }, function (err, r) {
+  Student.find({ role: req.params.id }, function (err, r) {
     if (err) {
       console.log(err);
       res.send(err);
@@ -81,7 +79,7 @@ const deleteRole = async (req, res) => {
         res
             .status(403)
             .send(
-                'This role is associated with Employee so you can not delete this'
+                'This role is associated with Student so you can not delete this'
             );
       }
     }

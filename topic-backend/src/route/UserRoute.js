@@ -1,18 +1,16 @@
-const express = require('express')
+const express = require('express');
 const route = express.Router();
-const { verifyHR, verifyHREmployee, verifyEmployee } = require('../middleware/Middleware');
+const { verifyAdmin, verifyAdminStudent, verifyStudent } = require('../middleware/Middleware');
 
-const UserController = require('../controller/user.controller')
+const UserController = require('../controller/user.controller');
 
-route.get("/api/employee",verifyHR, UserController.findAllUser)
-route.post("/api/employee",verifyHR, UserController.addUser)
-route.put("/api/employee/:id",verifyHR, UserController.updateUser)
-route.delete("/api/employee/:id",verifyHR, UserController.deleteUser)
+route.get('/api/student', verifyAdmin, UserController.findAllUser);
+route.post('/api/student', verifyAdmin, UserController.addUser);
+route.put('/api/student/:id', verifyAdmin, UserController.updateUser);
+route.delete('/api/student/:id', verifyAdmin, UserController.deleteUser);
 
-route.get("/api/personal-info/:id",verifyHREmployee, UserController.findOneStudent)
-route.put("/api/personal-info/:id",verifyEmployee, UserController.updateOneStudent)
-
-
+route.get('/api/personal-info/:id', verifyAdminStudent, UserController.findOneStudent);
+route.put('/api/personal-info/:id', verifyStudent, UserController.updateOneStudent);
 
 
-module.exports = route
+module.exports = route;

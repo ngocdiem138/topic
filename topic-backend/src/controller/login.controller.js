@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const { Employee } = require('../model/Employee.js');
+const { Student } = require('../model/Student.js');
 let jwtKey = 'set_your_jwt_key';
 
 const login = async (req, res) => {
@@ -20,7 +20,7 @@ const login = async (req, res) => {
           console.log(err);
           res.status(400).send(err.details[0].message);
         } else {
-          Employee.findOne(
+          Student.findOne(
               { Email: req.body.email },
               'Password _id Account FirstName LastName',
               function (err, document) {
