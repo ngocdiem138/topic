@@ -1,71 +1,306 @@
-import { Switch, Route } from 'react-router-dom';
+import React, { Component } from "react";
+import "./App.css";
+import axios from "axios";
+import jwt from "jsonwebtoken";
 
-import StudentsTable from './Students/StudentsTable';
-import AddStudent from './Students/AddStudent';
-import StudentDetails from './Students/StudentDetails';
-import Layout from './Layout/Layout';
-import SubjectsPanel from './Subjects/SubjectsPanel';
-import AddSubject from './Subjects/AddSubject';
-import Classes from './Classes/Classes';
-import ClassDetails from './Classes/ClassDetails';
-import AddClass from './Classes/AddClass';
-import './App.css';
-import Teachers from './Teachers/Teachers';
-import AddTeacher from './Teachers/AddTeacher';
-import SubjectDetails from './Subjects/SubjectDetails';
-import TeacherDetails from './Teachers/TeacherDetails';
-import StudentsByAge from './Students/StudentsByAge';
-import StudentsByClass from './Classes/StudentsByClass';
-import EditStudent from './Students/EditStudent';
-import EditClass from './Classes/EditClass';
-import EditSubject from './Subjects/EditSubject';
-import TeachersBySubject from './Subjects/TeachersBySubject';
-import EditTeacher from './Teachers/EditTeacher';
-import TeachersBySalary from './Teachers/TeachersBySalary';
-import Login from './Login/Login';
-import PrivateRoute from './Login/PrivateRoute';
+import Login from "./component/Login.jsx";
+import Temp from "./component/Temp.jsx";
+import NotFound404 from "./component/NotFound404.jsx";
+import DashboardAdmin from "./component/teacher/DashboardAdmin.jsx";
+import DashboardHR from "./component/admin/DashboardHR.jsx";
+import DashboardEmployee from "./component/student/DashboardEmployee.jsx";
+import { Switch } from "react-router";
 
-let isLoggedIn = false;
-const username = localStorage.getItem("username");
-const password = localStorage.getItem("password");
-isLoggedIn = username === 'admin@sms.com' && password === 'admin';
+import {
+  HashRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  DefaultRoute
+} from "react-router-dom";
+import history from "./history.js";
 
-function App() {
-  return (
-    <div className="App">
-      <Switch>
-        <Route path='/' exact component={Login} ></Route>
-      </Switch>
-      {isLoggedIn &&
-        <Layout>
-          <Switch>
-            <PrivateRoute path='/students' exact component={StudentsTable} />
-            <PrivateRoute path='/students/add' exact component={AddStudent} />
-            <PrivateRoute path='/students/:id' exact component={StudentDetails} />
-            <PrivateRoute path='/students-by-age' exact component={StudentsByAge} />
-            <PrivateRoute path='/students/edit/:id' exact component={EditStudent} />
+class App extends Component {
+  state = {
+    data: {},
+    loading: false,
+    pass: true,
+    isLogin: false,
+    firstTimeAlert: true,
+  };
+  componentDidMount() {
+    this.setState({
+      data: {
+        _id: localStorage.getItem("_id") || "",
+        Account: localStorage.getItem("Account") || "",
+        Name: localStorage.getItem("Name") || ""
+      },
+      isLogin: localStorage.getItem("isLogin") == "true"
 
-            <PrivateRoute path='/Subjects' exact component={SubjectsPanel} />
-            <PrivateRoute path='/Subjects/Add' exact component={AddSubject} />
-            <PrivateRoute path='/Subjects/Details/:subjectId' exact component={SubjectDetails} />
-            <PrivateRoute path='/subjects/edit/:subjectId' exact component={EditSubject} />
-            <PrivateRoute path='/teachers-by-subject' exact component={TeachersBySubject} />
+    }, () => {
+      // temporary : for user to see user id and pass of all accounts to explore all features of app
+      this.alertFirstTime()
+    });
 
-            <PrivateRoute path='/Teachers' exact component={Teachers} />
-            <PrivateRoute path='/Teachers/Add' exact component={AddTeacher} />
-            <PrivateRoute path='/Teachers/Details/:id' exact component={TeacherDetails} />
-            <PrivateRoute path='/Teachers/edit/:id' exact component={EditTeacher} />
-            <PrivateRoute path='/teachers-by-salary' exact component={TeachersBySalary} />
+  }
+  alertFirstTime() {
+    if (this.state.firstTimeAlert && !this.state.isLogin) {
+      // setTimeout(function () {
+      //   window.alert(
+      //     `To explore the feature of this application here is the temporary id and pass for all account
+      // Admin:
+      //     id:admin@gmail.com
+      //     pass:admin
+      // Hr:
+      //     id:hr@gmail.com
+      //     pass:hr
+      // Employee:
+      //     id:emp@gmail.com
+      //     pass:emp
+      // `)
+      // }, 500);
 
-            <PrivateRoute path='/Classes' exact component={Classes} />
-            <PrivateRoute path='/Classes/Add' exact component={AddClass} />
-            <PrivateRoute path='/Classes/Details/:classId' exact component={ClassDetails} />
-            <PrivateRoute path='/students-by-class' exact component={StudentsByClass} />
-            <PrivateRoute path='/Classes/Edit/:classId' exact component={EditClass} />
-          </Switch>
-        </Layout>}
-    </div>
-  );
+      this.setState({ firstTimeAlert: false });
+    }
+  }
+  render() {
+    return (
+      // <div>{this.state.isLogin ? (
+      //   <div>
+
+      //   <DashboardAdmin data={this.state.data}/>
+      //   </div>
+      // ) : (
+      // <Login
+      //   onSubmit={this.handleSubmit}
+      //   loading={this.state.loading}
+      //   pass={this.state.pass}
+      // />
+      // )}</div>
+      //  <DashboardAdmin data={this.state.data}/>
+      //  <DashboardHR  data={this.state.data}/>
+      //  <DashboardEmployee   data={this.state.data}/>
+      //  <Temp />
+      // <NotFound404/>
+      < Router >
+
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={props =>
+              this.state.data["Account"] == 1 ? (
+                // <Dashboard />
+                <Redirect to="/admin" />
+              ) : // <Login OnLogin={this.handleLogin}/>
+
+                this.state.data["Account"] == 2 ? (
+                  // <Dashboard />
+                  <Redirect to="/hr" />
+                ) : //
+                  this.state.data["Account"] == 3 ? (
+                    // <Dashboard />
+                    <Redirect to="/student" />
+                  ) : (
+                      <Login
+                        onSubmit={this.handleSubmit}
+                        loading={this.state.loading}
+                        pass={this.state.pass}
+                      />
+                    )
+            }
+          />
+          <Route
+            // exact
+            path="/admin"
+            render={props =>
+              this.state.data["Account"] == 1 ? (
+                <DashboardAdmin
+                  data={this.state.data}
+                  onLogout={this.handleLogout}
+                />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
+          />
+          <Route
+            // exact
+            path="/hr"
+            render={props =>
+              this.state.data["Account"] == 2 ? (
+                <DashboardHR
+                  data={this.state.data}
+                  onLogout={this.handleLogout}
+                />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
+          />
+          <Route
+            // exact
+            path="/student"
+            render={props =>
+              this.state.data["Account"] == 3 ? (
+                <DashboardEmployee
+                  data={this.state.data}
+                  onLogout={this.handleLogout}
+                />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
+          />
+          {/* <Route path="/" render={() => <Redirect to="/login" />} />
+          <Route
+            render={() => (
+              //  <h1>Not Found app.JS</h1>
+              <Redirect to="/login" />
+            )}
+          /> */}
+          <Redirect to="/login" />
+        </Switch>
+      </Router >
+    );
+  }
+  handleSubmit = event => {
+    event.preventDefault();
+    // console.log("id", event.target[0].value);
+    this.setState({ pass: true });
+    this.setState({ loading: true });
+    this.login(event.target[0].value, event.target[1].value);
+    event.target.reset();
+  };
+  handleLogout = event => {
+    console.log("logout");
+    localStorage.clear();
+    this.componentDidMount();
+  };
+  login = (id, pass) => {
+    // history.push('new/path/here/');
+
+    // history.push('/page');
+    // History.push('/page');
+    // this.context.history.push('/path');
+
+    //email=admin@fenil.com&password=admin
+
+    let bodyLogin = {
+      email: id,
+      password: pass
+    };
+    // let bodyLogin ="email="+id+"&password="+pass;
+    // {Email: id, Password: pass}
+
+    axios
+      .post(process.env.REACT_APP_API_URL + "/api/login", bodyLogin)
+      .then(res => {
+        // console.log(decodedData.Account);
+        console.log(jwt.decode(res.data));
+        var decodedData = jwt.decode(res.data);
+        localStorage.setItem("token", res.data);
+
+        if (
+          (res == undefined ||
+            res == null ||
+            decodedData.Account == undefined ||
+            decodedData.Account == null) &&
+          !(
+            decodedData.Account == 1 ||
+            decodedData.Account == 2 ||
+            decodedData.Account == 3
+          )
+        ) {
+          this.setState({ pass: false });
+          this.setState({ loading: false });
+        } else {
+          if (decodedData.Account == 1) {
+            // this.setState({ data: decodedData });
+            // localStorage.setItem('data', JSON.stringfy(decodedData));
+
+            this.setState({ pass: true });
+            // localStorage.setItem('pass', 'true');
+
+            this.setState({ loading: false });
+            // localStorage.setItem('loading', 'false');
+
+            this.setState({ isLogin: true });
+            localStorage.setItem("isLogin", true);
+
+            // localStorage.setItem('isLogin', 'true');
+            localStorage.setItem("Account", 1);
+            localStorage.setItem("_id", decodedData["_id"]);
+            localStorage.setItem(
+              "Name",
+              decodedData["FirstName"] + " " + decodedData["LastName"]
+            );
+            this.componentDidMount();
+            history.push("#/admin/role");
+          }
+          if (decodedData.Account == 2) {
+            // this.setState({ data: decodedData });
+
+            this.setState({ pass: true });
+            this.setState({ loading: false });
+            this.setState({ isLogin: true });
+            localStorage.setItem("isLogin", true);
+
+            localStorage.setItem("Account", 2);
+            localStorage.setItem("_id", decodedData["_id"]);
+            localStorage.setItem(
+              "Name",
+              decodedData["FirstName"] + " " + decodedData["LastName"]
+            );
+            this.componentDidMount();
+
+            history.push("#/hr/student");
+          }
+          if (decodedData.Account == 3) {
+            // this.setState({ data: decodedData });
+
+            this.setState({ pass: true });
+            this.setState({ loading: false });
+            this.setState({ isLogin: true });
+            localStorage.setItem("isLogin", true);
+
+            localStorage.setItem("Account", 3);
+            localStorage.setItem("_id", decodedData["_id"]);
+            localStorage.setItem(
+              "Name",
+              decodedData["FirstName"] + " " + decodedData["LastName"]
+            );
+            this.componentDidMount();
+
+            history.push("#/student/" + decodedData._id + "/personal-info");
+          }
+        }
+
+        //  console.log(decodedData);
+        //  console.log(`decodedData.toString()=="false" `,decodedData.toString()=="false" );
+
+        //  if(decodedData.toString()=="false")
+
+        //  { console.log("1");
+        //  this.setState({ pass: false })
+        //  this.setState({ loading: false }); ;
+
+        // }else{
+        //   console.log("2");
+        //   this.setState({ pass: true });
+        //  this.setState({ loading: false });
+        //  this.setState({ data: decodedData});
+        //  this.setState({ isLogin: true });
+
+        // }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({ pass: false });
+        this.setState({ loading: false });
+      });
+
+  };
 }
 
 export default App;
