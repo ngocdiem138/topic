@@ -94,7 +94,7 @@ class EducationTable extends Component {
 
   loadEducationData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/education/" + this.props.data["_id"], {
+      .get(process.env.REACT_APP_API_URL + "/api/student/education/" + this.props.data["_id"], {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

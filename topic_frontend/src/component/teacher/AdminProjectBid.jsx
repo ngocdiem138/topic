@@ -70,15 +70,8 @@ class AdminProjectBid extends Component {
       ProjectTitle: event.target[0].value,
       ProjectURL: event.target[1].value,
       ProjectDesc:event.target[2].value,
-      Portal_ID:event.target[3].value,
-      EstimatedTime:event.target[4].value,
-      EstimatedCost:event.target[5].value,
-      ResourceID:event.target[6].value,
-      Status:event.target[7].value,
-      Remark:event.target[8].value,
-
-    
-    
+      Status:event.target[4].value,
+      Remark:event.target[5].value,
     };
     //  let body= "CompanyID=" + event.target[0].value + "&ProjectBid=" + event.target[1].value;
     //  let body= "FenilKaneria";
@@ -129,12 +122,12 @@ class AdminProjectBid extends Component {
       ProjectTitle: editInfo.target[0].value,
       ProjectURL: editInfo.target[1].value,
       ProjectDesc:editInfo.target[2].value,
-      Portal_ID:editInfo.target[3].value,
-      EstimatedTime:editInfo.target[4].value,
-      EstimatedCost:editInfo.target[5].value,
-      ResourceID:editInfo.target[6].value,
-      Status:editInfo.target[7].value,
-      Remark:editInfo.target[8].value,
+      // Portal_ID:editInfo.target[3].value,
+      // EstimatedTime:editInfo.target[4].value,
+      // EstimatedCost:editInfo.target[5].value,
+      // ResourceID:editInfo.target[6].value,
+      Status:editInfo.target[3].value,
+      Remark:editInfo.target[4].value,
     };
     console.log("update", body);
     axios

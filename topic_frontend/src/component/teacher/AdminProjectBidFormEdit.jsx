@@ -111,61 +111,6 @@ class AdminProjectBidFormEdit extends Component {
 
           <Form.Group as={Row} >
             <Form.Label column sm={2}>
-              Portals
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control as="select" name="CompanyID" disabled={true}>
-                {this.portalsData.map((data, index) => (
-                  <option value={data["_id"]}
-                    selected={
-                      this.props.editData["portals"][0]["ID"] == data["ID"]
-                    }
-                  >{data["PortalName"]}</option>))}
-              </Form.Control>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
-              Estimated Time
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control type="number" placeholder="Estimated Time" name="EstimatedTime" disabled={true}
-                value={this.state.EstimatedTimeData}
-                onChange={value => this.onEstimatedTimeDataChange(value)} />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
-              Estimated Cost
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control type="number" placeholder="Estimated Cost" name="EstimatedCost" disabled={true}
-                value={this.state.EstimatedCostData}
-                onChange={value => this.onEstimatedCostDataChange(value)} />
-            </Col>
-          </Form.Group>
-
-
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
-              Resource
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control as="select" disabled={true}>
-                <option value="1" selected={
-                  this.props.editData["ResourceID"] == 1
-                }>Resource1</option>
-                <option value="2" selected={this.props.editData["ResourceID"] == 2}>Resource2</option>
-                <option value="3" selected={this.props.editData["ResourceID"] == 3}>Resource3</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
               Status
     </Form.Label>
             <Col sm={10} className="form-input">

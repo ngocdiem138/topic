@@ -85,7 +85,7 @@ class DashboardHR extends Component {
                     Personal Information
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to={
                       "/student/" + this.props.data["_id"] + "/education"
@@ -97,8 +97,8 @@ class DashboardHR extends Component {
                     />
                     Education
                   </Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to={
                       "/student/" + this.props.data["_id"] + "/family-info"
                     }>
@@ -108,7 +108,7 @@ class DashboardHR extends Component {
                     />
                     Groups
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to={
                       "/student/" + this.props.data["_id"] + "/topic"

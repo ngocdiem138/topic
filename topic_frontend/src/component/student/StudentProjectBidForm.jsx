@@ -7,35 +7,35 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 class StudentProjectBidForm extends Component {
   state = {
     status: "",
-    portalsInfo: []
+    // portalsInfo: []
   };
-  portalsData = [];
+  // portalsData = [];
   handleChange = event => {
     this.setState({
       status: event.target.value
     });
   };
-  loadPortalsInfo = () => {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/api/admin/portal", {
-        headers: {
-          authorization: localStorage.getItem("token") || ""
-        }
-      })
-      .then(response => {
-        // i
-        this.portalsData = response.data;
+  // loadPortalsInfo = () => {
+  //   axios
+  //     .get(process.env.REACT_APP_API_URL + "/api/admin/portal", {
+  //       headers: {
+  //         authorization: localStorage.getItem("token") || ""
+  //       }
+  //     })
+  //     .then(response => {
+  //       // i
+  //       this.portalsData = response.data;
 
-        this.portalsData = this.portalsData.filter(data => data["Status"] == 1);
+  //       this.portalsData = this.portalsData.filter(data => data["Status"] == 1);
 
-        this.setState({ portalsInfo: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  //       this.setState({ portalsInfo: response.data });
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
   componentDidMount() {
-    this.loadPortalsInfo();
+    // this.loadPortalsInfo();
   }
   render() {
     return (
@@ -83,60 +83,6 @@ class StudentProjectBidForm extends Component {
 
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
-                Portals
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" name="CompanyID" require>
-                  {this.portalsData.map((data, index) => (
-                    <option value={data["_id"]}>{data["PortalName"]}</option>
-                  ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Estimated Time
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="number"
-                  placeholder="Estimated Time"
-                  name="EstimatedTime"
-                  require
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Estimated Cost
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="number"
-                  placeholder="Estimated Cost"
-                  name="EstimatedCost"
-                  require
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Resource
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" require>
-                  <option value="1">Resource1</option>
-                  <option value="2">Resource2</option>
-                  <option value="3">Resource3</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
                 Status
               </Form.Label>
               <Col sm={10} className="form-input">
@@ -146,6 +92,15 @@ class StudentProjectBidForm extends Component {
                   <option value="1">Cancel</option>
                   <option value="1">Award</option>
                 </Form.Control>
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row}>
+              <Form.Label column sm={2}>
+                Remark
+              </Form.Label>
+              <Col sm={10} className="form-input">
+                <Form.Control as="textarea" rows="3" disabled={true} require />
               </Col>
             </Form.Group>
 

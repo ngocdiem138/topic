@@ -78,7 +78,7 @@ class StudentProjectBidFormEdit extends Component {
           <Form.Group as={Row} >
             <Form.Label column sm={2}>
               Project Title
-    </Form.Label>
+            </Form.Label>
             <Col sm={10} className="form-input">
               <Form.Control type="Text" placeholder="Project Title" name="ProjectTitle" require
                 value={this.state.ProjectTitleData}
@@ -88,7 +88,7 @@ class StudentProjectBidFormEdit extends Component {
           <Form.Group as={Row} >
             <Form.Label column sm={2}>
               Project URL
-    </Form.Label>
+            </Form.Label>
             <Col sm={10} className="form-input">
               <Form.Control type="Text" placeholder="Project URL" name="ProjectURL" require
                 value={this.state.ProjectURLData}
@@ -98,7 +98,7 @@ class StudentProjectBidFormEdit extends Component {
           <Form.Group as={Row} >
             <Form.Label column sm={2}>
               Project Description
-    </Form.Label>
+            </Form.Label>
             <Col sm={10} className="form-input">
               <Form.Control as="textarea" rows="3" require
                 value={this.state.ProjectDescriptionData}
@@ -108,63 +108,8 @@ class StudentProjectBidFormEdit extends Component {
 
           <Form.Group as={Row} >
             <Form.Label column sm={2}>
-              Portals
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control as="select" name="CompanyID" require>
-                {this.portalsData.map((data, index) => (
-                  <option value={data["_id"]}
-                    selected={
-                      this.props.editData["portals"][0]["ID"] == data["ID"]
-                    }
-                  >{data["PortalName"]}</option>))}
-              </Form.Control>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
-              Estimated Time
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control type="number" placeholder="Estimated Time" name="EstimatedTime" require
-                value={this.state.EstimatedTimeData}
-                onChange={value => this.onEstimatedTimeDataChange(value)} />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
-              Estimated Cost
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control type="number" placeholder="Estimated Cost" name="EstimatedCost" require
-                value={this.state.EstimatedCostData}
-                onChange={value => this.onEstimatedCostDataChange(value)} />
-            </Col>
-          </Form.Group>
-
-
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
-              Resource
-    </Form.Label>
-            <Col sm={10} className="form-input">
-              <Form.Control as="select" require>
-                <option value="1" selected={
-                  this.props.editData["ResourceID"] == 1
-                }>Resource1</option>
-                <option value="2" selected={this.props.editData["ResourceID"] == 2}>Resource2</option>
-                <option value="3" selected={this.props.editData["ResourceID"] == 3}>Resource3</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} >
-            <Form.Label column sm={2}>
               Status
-    </Form.Label>
+            </Form.Label>
             <Col sm={10} className="form-input">
               <Form.Control as="select" require>
                 <option value="1" selected={this.props.editData["Status"] == 1}>Open</option>
@@ -172,6 +117,16 @@ class StudentProjectBidFormEdit extends Component {
                 <option value="3" selected={this.props.editData["Status"] == 3}>Cancel</option>
                 <option value="4" selected={this.props.editData["Status"] == 4}>Award</option>
               </Form.Control>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row}>
+            <Form.Label column sm={2}>
+              Remark
+            </Form.Label>
+            <Col sm={10} className="form-input">
+              <Form.Control as="textarea" rows="3" disabled={true} require
+                value={this.state.RemarkData} />
             </Col>
           </Form.Group>
 

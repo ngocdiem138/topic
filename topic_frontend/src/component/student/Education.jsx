@@ -26,17 +26,17 @@ class Education extends Component {
               editData={this.state.editData}
             />
           ) : (
-            <EducationFormEdit
-              onEducationEditUpdate={this.handleEducationEditUpdate}
-              onFormEditClose={this.handleEditFormClose}
-              editData={this.state.editData}
-            />
-              // <EducationTable
-              //   onAddEducation={this.handleAddEducation}
-              //   onEditEducation={this.handleEditEducation}
-              //   data={this.props.data}
-              //   back={this.props.back}
-              // />
+            // <EducationFormEdit
+            //   onEducationEditUpdate={this.handleEducationEditUpdate}
+            //   onFormEditClose={this.handleEditFormClose}
+            //   editData={this.state.editData}
+            // />
+              <EducationTable
+                onAddEducation={this.handleAddEducation}
+                onEditEducation={this.handleEditEducation}
+                data={this.props.data}
+                back={this.props.back}
+              />
             )
         ) : (
           <EducationFormEdit

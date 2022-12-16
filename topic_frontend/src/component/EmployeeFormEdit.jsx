@@ -185,30 +185,7 @@ class EmployeeFormEdit extends Component {
                 </Form.Control>
               </Col>
             </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Role
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" name="role">
-                  <option disabled selected>
-                    Select your option
-                  </option>
-                  {this.state.roleData.map((data, index) => (
-                    <option
-                      key={index}
-                      value={data["_id"]}
-                      selected={
-                        this.props.editData["role"][0]["_id"] == data["_id"]
-                      }
-                    >
-                      {data["RoleName"]}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
+            
             <Form.Group as={Row}>
               <Form.Label as="legend" column sm={2}>
                 Gender
@@ -318,84 +295,6 @@ class EmployeeFormEdit extends Component {
                   required
                   value={this.state.EmployeeCodeData}
                   onChange={value => this.onEmployeeCodeDataChange(value)}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Department
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" name="department" required>
-                  <option value="" disabled selected>
-                    Select your option
-                  </option>
-                  {this.state.departmentData.map((data, index) => (
-                    <option
-                      key={index}
-                      value={data["_id"]}
-                      selected={
-                        this.props.editData["department"][0]["_id"] ==
-                        data["_id"]
-                      }
-                    >
-                      {data["DepartmentName"]}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Position
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" name="position" required>
-                  <option value="" disabled selected>
-                    Select your option
-                  </option>
-                  {this.state.positionData.map((data, index) => (
-                    <option
-                      key={index}
-                      value={data["_id"]}
-                      selected={
-                        this.props.editData["position"][0]["_id"] == data["_id"]
-                      }
-                    >
-                      {data["PositionName"]}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Date Of Joining
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="date"
-                  placeholder="Date Of Joining"
-                  required
-                  //   value={this.props.editData["DateOfJoining"].slice(0, 10)}
-                  value={this.state.DateOfJoiningData}
-                  onChange={value => this.onDateOfJoiningDataChange(value)}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Terminate Date
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="date"
-                  placeholder="Terminate Date"
-                  //   value={this.props.editData["TerminateDate"].slice(0, 10)}
-                  value={this.state.TerminateDateData}
-                  onChange={value => this.onTerminateDateDataChange(value)}
                 />
               </Col>
             </Form.Group>

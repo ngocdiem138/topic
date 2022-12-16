@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./StudentProjectBidTable.css";
+import "./CityTable.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -7,11 +7,9 @@ import { RingLoader } from "react-spinners";
 import { css } from "@emotion/core";
 import { Button } from "react-bootstrap";
 
-
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
-
 
 const override = css`
   display: block;
@@ -19,91 +17,50 @@ const override = css`
   margin-top: 45px;
   border-color: red;
 `;
-
-class StudentProjectBidTable extends Component {
+class CityTable extends Component {
   state = {
-    projectBidData: [],
+    cityData: [],
     loading: true,
 
     columnDefs: [
-      // {
-      //   headerName: "",
-      //   field: "",
-      //   sortable: true
-      //   // filter: true ,
-      // },
-      // {
-      //   headerName: "",
-      //   field: "",
-      //   sortable: true,
-      //   type: "numberColumn",
-      //   filter: 'agNumberColumnFilter'
-      //   // filter: true ,
-      // },
       {
-        headerName: "Project Title",
-        field: "ProjectTitle",
+        headerName: "Country",
+        field: "CountryName",
         sortable: true
         // filter: true ,
       },
       {
-        headerName: "Portal",
-        field: "PortalName",
+        headerName: "State",
+        field: "StateName",
         sortable: true
         // filter: true ,
       },
       {
-        headerName: "Project URL",
-        field: "ProjectURL",
+        headerName: "City",
+        field: "CityName",
         sortable: true
         // filter: true ,
       },
-      {
-        headerName: "Estimated Time",
-        field: "EstimatedTime",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Cost",
-        field: "EstimatedCost",
-        sortable: true,
-        type: "numberColumn",
-        filter: 'agNumberColumnFilter'
-        // filter: true ,
-      },
-      {
-        headerName: "Remark",
-        field: "Remark",
-        sortable: true
-        // filter: true ,
-      },
-
 
       {
         headerName: "",
         field: "edit",
         filter: false,
         width: 30,
-        cellRendererFramework: this.renderEditButton.bind(this),
-
-
+        cellRendererFramework: this.renderEditButton.bind(this)
       },
-      // {
-      //   headerName: "",
-      //   field: "delete",
-      //   filter: false,
-      //   width: 30,
-      //   cellRendererFramework: this.renderButton.bind(this),
-
-
-      // },
-
+      {
+        headerName: "",
+        field: "delete",
+        filter: false,
+        width: 30,
+        cellRendererFramework: this.renderButton.bind(this)
+      }
     ],
     rowData: [],
     defaultColDef: {
       resizable: true,
-      width: 200,
+      width: 400,
       filter: "agTextColumnFilter"
       // filter: true ,
     },
@@ -111,33 +68,33 @@ class StudentProjectBidTable extends Component {
       return 35;
     }
   };
-  projectBidObj = [];
+  cityObj = [];
   rowDataT = [];
 
-  loadProjectBidData = () => {
+  // stateDataArray;
+  loadCityData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/student/project-bid", {
+      .get(process.env.REACT_APP_API_URL + "/api/city", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
       })
       .then(response => {
-        this.projectBidObj = response.data;
+        // if(response.data.length==0){this.cityObj=["temp"];}
+        // else{
+        this.cityObj = response.data;
+        // }
         console.log("response", response.data);
-        this.setState({ projectBidData: response.data });
+        this.setState({ cityData: response.data });
         this.setState({ loading: false });
         this.rowDataT = [];
 
-        this.projectBidObj.map(data => {
+        this.cityObj.map(data => {
           let temp = {
             data,
-            ProjectTitle: data["ProjectTitle"],
-            // PortalName: data["portals"][0]["PortalName"],
-            ProjectURL: data["ProjectURL"],
-            EstimatedTime: data["EstimatedTime"],
-            EstimatedCost: data["EstimatedCost"],
-            Remark: data["Remark"],
-
+            CountryName: data["state"][0]["country"][0]["CountryName"],
+            StateName: data["state"][0]["StateName"],
+            CityName: data["CityName"]
           };
 
           this.rowDataT.push(temp);
@@ -149,54 +106,70 @@ class StudentProjectBidTable extends Component {
       });
   };
 
-  onProjectBidDelete = e => {
-  //   console.log(e);
-  //   if (window.confirm("Are you sure to delete this record? ") == true) {
-  //     axios
-  //       .delete(process.env.REACT_APP_API_URL + "/api/admin/project-bid/" + e, {
-  //         headers: {
-  //           authorization: localStorage.getItem("token") || ""
-  //         }
-  //       })
-  //       .then(res => {
-  //         this.componentDidMount();
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }
+  onCityDelete = e => {
+    console.log(e);
+    // let body= "ID=" + e;
+    if (window.confirm("Are you sure to delete this record ? ") == true) {
+      axios
+        .delete(process.env.REACT_APP_API_URL + "/api/city/" + e, {
+          headers: {
+            authorization: localStorage.getItem("token") || ""
+          }
+        })
+        .then(res => {
+          this.componentDidMount();
+        })
+        .catch(err => {
+          console.log(err);
+          console.log(err.response);
+          if (err.response.status == 403) {
+            window.alert(err.response.data);
+          }
+        });
+    }
   };
   componentDidMount() {
-    this.loadProjectBidData();
+    this.loadCityData();
+
   }
   renderButton(params) {
     console.log(params);
-    return <FontAwesomeIcon
-      icon={faTrash}
-      onClick={() => this.onProjectBidDelete(params.data.data["_id"])}
-    />;
+    return (
+      <FontAwesomeIcon
+        icon={faTrash}
+        onClick={() => this.onCityDelete(params.data.data["_id"])}
+      />
+    );
   }
   renderEditButton(params) {
     console.log(params);
-    return <FontAwesomeIcon
-      icon={faEdit}
-      onClick={() => this.props.onEditProjectBid(params.data.data)}
-    />;
+    return (
+      <FontAwesomeIcon
+        icon={faEdit}
+        onClick={() => this.props.onEditCity(params.data.data)}
+      />
+    );
   }
 
   render() {
+    // let value=(this.props.pass) ? undefined : "";<i class="fas fa-plus"></i>
     return (
       <div id="table-outer-div-scroll">
-        <h2 id="role-title">Topic Details</h2>
+        <h2 id="role-title">City Details</h2>
+        {/* <Link to="/admin/role/form"> */}
+        {/* <button id="add-button" >
+          
+          Add
+        </button> */}
         <Button
           variant="primary"
           id="add-button"
-          onClick={this.props.onAddProjectBid}
+          onClick={this.props.onAddCity}
         >
           <FontAwesomeIcon icon={faPlus} id="plus-icon" />
           Add
         </Button>
-
+        {/* </Link> */}
         <div id="clear-both" />
 
         {!this.state.loading ? (
@@ -233,10 +206,9 @@ class StudentProjectBidTable extends Component {
               />
             </div>
           )}
-
       </div>
     );
   }
 }
 
-export default StudentProjectBidTable;
+export default CityTable;

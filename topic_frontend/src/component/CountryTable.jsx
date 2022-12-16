@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./AdminProjectBidTable.css";
+import "./CountryTable.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -7,11 +7,9 @@ import { RingLoader } from "react-spinners";
 import { css } from "@emotion/core";
 import { Button } from "react-bootstrap";
 
-
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
-
 
 const override = css`
   display: block;
@@ -20,90 +18,39 @@ const override = css`
   border-color: red;
 `;
 
-class AdminProjectBidTable extends Component {
+class CountryTable extends Component {
   state = {
-    projectBidData: [],
+    countryData: [],
     loading: true,
 
     columnDefs: [
-      // {
-      //   headerName: "",
-      //   field: "",
-      //   sortable: true
-      //   // filter: true ,
-      // },
-      // {
-      //   headerName: "",
-      //   field: "",
-      //   sortable: true,
-      //   type: "numberColumn",
-      //   filter: 'agNumberColumnFilter'
-      //   // filter: true ,
-      // },
       {
-        headerName: "Project Title",
-        field: "ProjectTitle",
+        headerName: "Country",
+        field: "CountryName",
         sortable: true
+        // width: 150,
         // filter: true ,
       },
-      {
-        headerName: "Portal",
-        field: "PortalName",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Project URL",
-        field: "ProjectURL",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Time",
-        field: "EstimatedTime",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Cost",
-        field: "EstimatedCost",
-        sortable: true,
-        type: "numberColumn",
-        filter: 'agNumberColumnFilter'
-        // filter: true ,
-      },
-      {
-        headerName: "Remark",
-        field: "Remark",
-        sortable: true
-        // filter: true ,
-      },
-
 
       {
         headerName: "",
         field: "edit",
         filter: false,
         width: 30,
-        cellRendererFramework: this.renderEditButton.bind(this),
-
-
+        cellRendererFramework: this.renderEditButton.bind(this)
       },
-      // {
-      //   headerName: "",
-      //   field: "delete",
-      //   filter: false,
-      //   width: 30,
-      //   cellRendererFramework: this.renderButton.bind(this),
-
-
-      // },
-
+      {
+        headerName: "",
+        field: "delete",
+        filter: false,
+        width: 30,
+        cellRendererFramework: this.renderButton.bind(this)
+      }
     ],
     rowData: [],
     defaultColDef: {
       resizable: true,
-      width: 200,
+      width: 1180,
       filter: "agTextColumnFilter"
       // filter: true ,
     },
@@ -111,33 +58,31 @@ class AdminProjectBidTable extends Component {
       return 35;
     }
   };
-  projectBidObj = [];
+  countryObj = [];
   rowDataT = [];
 
-  loadProjectBidData = () => {
+  // countryDataArray;
+  loadCountryData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/admin/project-bid", {
+      .get(process.env.REACT_APP_API_URL + "/api/country", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
       })
       .then(response => {
-        this.projectBidObj = response.data;
+        // if(response.data.length==0){this.countryObj=["temp"];}
+        // else{
+        this.countryObj = response.data;
+        // }
         console.log("response", response.data);
-        this.setState({ projectBidData: response.data });
+        this.setState({ countryData: response.data });
         this.setState({ loading: false });
         this.rowDataT = [];
 
-        this.projectBidObj.map(data => {
+        this.countryObj.map(data => {
           let temp = {
             data,
-            ProjectTitle: data["ProjectTitle"],
-            // PortalName: data["portals"][0]["PortalName"],
-            ProjectURL: data["ProjectURL"],
-            EstimatedTime: data["EstimatedTime"],
-            EstimatedCost: data["EstimatedCost"],
-            Remark: data["Remark"],
-
+            CountryName: data["CountryName"]
           };
 
           this.rowDataT.push(temp);
@@ -149,56 +94,71 @@ class AdminProjectBidTable extends Component {
       });
   };
 
-  onProjectBidDelete = e => {
+  onCountryDelete = e => {
     console.log(e);
-    if (window.confirm("Are you sure to delete this record? ") == true) {
+    // let body= "ID=" + e;
+    if (window.confirm("Are you sure to delete this record ? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/admin/project-bid/" + e, {
+        .delete(process.env.REACT_APP_API_URL + "/api/country/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }
         })
         .then(res => {
+          // console.log(res);
           this.componentDidMount();
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.response);
+          if (err.response.status == 403) {
+            window.alert(err.response.data);
+          }
         });
     }
   };
+
   componentDidMount() {
-    this.loadProjectBidData();
+    this.loadCountryData();
   }
   renderButton(params) {
     console.log(params);
-    return <FontAwesomeIcon
-      icon={faTrash}
-      onClick={() => this.onProjectBidDelete(params.data.data["_id"])}
-    />;
+    return (
+      <FontAwesomeIcon
+        icon={faTrash}
+        onClick={() => this.onCountryDelete(params.data.data["_id"])}
+      />
+    );
   }
   renderEditButton(params) {
     console.log(params);
-    return <FontAwesomeIcon
-      icon={faEdit}
-      onClick={() => this.props.onEditProjectBid(params.data.data)}
-    />;
+    return (
+      <FontAwesomeIcon
+        icon={faEdit}
+        onClick={() => this.props.onEditCountry(params.data.data)}
+      />
+    );
   }
 
   render() {
+    // let value=(this.props.pass) ? undefined : "";<i class="fas fa-plus"></i>
     return (
       <div id="table-outer-div-scroll">
-        <h2 id="role-title">Topic Details</h2>
-        {/* <Button
+        <h2 id="role-title">Country Details</h2>
+        {/* <Link to="/admin/role/form"> */}
+        {/* <button id="add-button" >
+          
+          Add
+        </button> */}
+        <Button
           variant="primary"
           id="add-button"
-          onClick={this.props.onAddProjectBid}
+          onClick={this.props.onAddCountry}
         >
           <FontAwesomeIcon icon={faPlus} id="plus-icon" />
           Add
-        </Button> */}
-
+        </Button>
+        {/* </Link> */}
         <div id="clear-both" />
-
         {!this.state.loading ? (
           <div
             id="table-div"
@@ -233,10 +193,9 @@ class AdminProjectBidTable extends Component {
               />
             </div>
           )}
-
       </div>
     );
   }
 }
 
-export default AdminProjectBidTable;
+export default CountryTable;

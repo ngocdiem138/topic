@@ -50,12 +50,12 @@ class StudentProjectBid extends Component {
       ProjectTitle: event.target[0].value,
       ProjectURL: event.target[1].value,
       ProjectDesc:event.target[2].value,
-      Portal_ID:event.target[3].value,
-      EstimatedTime:event.target[4].value,
-      EstimatedCost:event.target[5].value,
-      ResourceID:event.target[6].value,
-      Status:event.target[7].value,
-      Remark:event.target[8].value,
+      // Portal_ID:event.target[3].value,
+      // EstimatedTime:event.target[4].value,
+      // EstimatedCost:event.target[5].value,
+      // ResourceID:event.target[6].value,
+      Status:event.target[4].value,
+      Remark:event.target[5].value,
 
     
     
@@ -63,7 +63,7 @@ class StudentProjectBid extends Component {
     //  let body= "CompanyID=" + event.target[0].value + "&ProjectBid=" + event.target[1].value;
     //  let body= "FenilKaneria";
     axios
-      .post(process.env.REACT_APP_API_URL + "/api/admin/project-bid", body, {
+      .post(process.env.REACT_APP_API_URL + "/api/student/project-bid", body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -109,28 +109,28 @@ class StudentProjectBid extends Component {
       ProjectTitle: editInfo.target[0].value,
       ProjectURL: editInfo.target[1].value,
       ProjectDesc:editInfo.target[2].value,
-      Portal_ID:editInfo.target[3].value,
-      EstimatedTime:editInfo.target[4].value,
-      EstimatedCost:editInfo.target[5].value,
-      ResourceID:editInfo.target[6].value,
-      Status:editInfo.target[7].value,
-      Remark:editInfo.target[8].value,
+      // Portal_ID:editInfo.target[3].value,
+      // EstimatedTime:editInfo.target[4].value,
+      // EstimatedCost:editInfo.target[5].value,
+      // ResourceID:editInfo.target[6].value,
+      Status:editInfo.target[3].value,
+      // Remark:editInfo.target[8].value,
     };
     console.log("update", body);
-    // axios
-    //   .put(process.env.REACT_APP_API_URL + "/api/admin/project-bid/" + info["_id"], body, {
-    //     headers: {
-    //       authorization: localStorage.getItem("token") || ""
-    //     }
-    //   })
-    //   .then(res => {
-    //     // this.componentDidMount();
-    //     this.setState({ table: false });
-    //     this.setState({ table: true });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios
+      .put(process.env.REACT_APP_API_URL + "/api/student/project-bid/" + info["_id"], body, {
+        headers: {
+          authorization: localStorage.getItem("token") || ""
+        }
+      })
+      .then(res => {
+        // this.componentDidMount();
+        this.setState({ table: false });
+        this.setState({ table: true });
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     this.setState({ editForm: false });
   };

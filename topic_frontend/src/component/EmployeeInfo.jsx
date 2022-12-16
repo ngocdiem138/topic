@@ -34,7 +34,7 @@ export class EmployeeInfo extends Component {
             Personal Information
           </Button>
           </Link>
-          <Link to="/hr/student/info/education">
+          {/* <Link to="/hr/student/info/education">
           <Button
             variant="outline-primary"
             size="lg"
@@ -43,27 +43,7 @@ export class EmployeeInfo extends Component {
           >
             Education
           </Button>
-          </Link>
-          <Link to="/hr/student/info/family-info">
-          <Button
-            variant="outline-primary"
-            size="lg"
-            block
-            className="empinfo-button"
-          >
-            Dependents
-          </Button>
-          </Link>
-          <Link to="/hr/student/info/work-experience">
-          <Button
-            variant="outline-primary"
-            size="lg"
-            block
-            className="empinfo-button"
-          >
-            Work Experience
-          </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     );

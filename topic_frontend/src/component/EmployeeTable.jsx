@@ -94,42 +94,6 @@ class AdminEmployeeTable extends Component {
       },
 
       {
-        headerName: "Role",
-        field: "RoleName",
-        sortable: true,
-
-        width: 70,
-        // filter: true ,
-      },
-      {
-        headerName: "Position Name",
-        field: "PositionName",
-        sortable: true,
-        width: 120,
-
-        // filter: true ,
-      },
-      {
-        headerName: "Department Name",
-        field: "DepartmentName",
-        sortable: true
-        ,
-        width: 120,
-        // filter: true ,
-      },
-
-
-
-      {
-        headerName: "Date Of Joining",
-        field: "DateOfJoining",
-        sortable: true
-        ,
-        width: 120,
-        // filter: true ,
-
-      },
-      {
         headerName: "",
         field: "info",
         filter: false,
@@ -203,16 +167,16 @@ class AdminEmployeeTable extends Component {
             Email: data["Email"],
             Password: data["Password"],
             Account: data["Account"] == 1 ? "Teacher" : (data["Account"] == 2 ? "Admin" : (data["Account"] == 3 ? "Student" : "")),
-            RoleName: data["role"][0]["RoleName"],
+            // RoleName: data["role"][0]["RoleName"],
             FirstName: data["FirstName"],
             MiddleName: data["MiddleName"],
             LastName: data["LastName"],
             DOB: data["DOB"].slice(0, 10),
             ContactNo: data["ContactNo"],
             EmployeeCode: data["EmployeeCode"],
-            DepartmentName: data["department"][0]["DepartmentName"],
-            PositionName: data["position"][0]["PositionName"],
-            DateOfJoining: data["DateOfJoining"].slice(0, 10)
+            // DepartmentName: data["department"][0]["DepartmentName"],
+            // PositionName: data["position"][0]["PositionName"],
+            // DateOfJoining: data["DateOfJoining"].slice(0, 10)
           };
 
           this.rowDataT.push(temp);
@@ -228,18 +192,18 @@ class AdminEmployeeTable extends Component {
     console.log(e);
     if (window.confirm("Are you sure to delete this record? ") == true) {
       window.alert("You are not allowed to perform this operation");
-      // axios
-      //   .delete(process.env.REACT_APP_API_URL + "/api/student/" + e, {
-      //     headers: {
-      //       authorization: localStorage.getItem("token") || ""
-      //     }
-      //   })
-      //   .then(res => {
-      //     this.componentDidMount();
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      axios
+        .delete(process.env.REACT_APP_API_URL + "/api/employee/" + e, {
+          headers: {
+            authorization: localStorage.getItem("token") || ""
+          }
+        })
+        .then(res => {
+          this.componentDidMount();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
   componentDidMount() {
@@ -275,48 +239,8 @@ class AdminEmployeeTable extends Component {
     console.log(e.target.value);
     this.setState({ searchData: e.target.value });
   };
-  // getFilteredEmp() {
-  //   return this.employeeObj.filter(emp => {
-  //     return (
-  //       emp["Email"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["role"][0]["RoleName"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["FirstName"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["MiddleName"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["LastName"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["DOB"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["ContactNo"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["EmployeeCode"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["department"][0]["DepartmentName"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["position"][0]["PositionName"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase()) ||
-  //       emp["DateOfJoining"]
-  //         .toLowerCase()
-  //         .includes(this.state.searchData.toLocaleLowerCase())
-  //     );
-  //   });
-  // }
 
   render() {
-    // let filteredEmp = this.getFilteredEmp();
     return (
       <div id="table-outer-div-scroll">
         <h2 id="role-title">Account Details</h2>

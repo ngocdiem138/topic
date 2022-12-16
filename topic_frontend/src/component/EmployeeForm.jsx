@@ -246,64 +246,6 @@ class EmployeeForm extends Component {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Department
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  as="select"
-                  name="department"
-                  required
-                >
-                  <option value="" disabled selected>
-                    Select your option
-                  </option>
-                  {this.state.departmentData.map((data, index) => (
-                    <option key={index} value={data["_id"]}>{data["DepartmentName"]}</option>
-                  ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Position
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" name="position" required>
-                  <option value="" disabled selected>
-                    Select your option
-                  </option>
-                  {this.state.positionData.map((data, index) => (
-                    <option key={index} value={data["_id"]}>{data["PositionName"]}</option>
-                  ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Date Of Joining
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="date"
-                  placeholder="Date Of Joining"
-                  required
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Terminate Date
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="date"
-                  placeholder="Terminate Date"
-                />
-              </Col>
-            </Form.Group>
 
 
 

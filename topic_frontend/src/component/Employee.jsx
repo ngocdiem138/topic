@@ -128,18 +128,18 @@ class Employee extends Component {
       Email: event.target[0].value,
       Password: event.target[1].value,
       Account: event.target[2].value,
-      RoleID: event.target[3].value,
+      // RoleID: event.target[3].value,
       Gender: this.state.addFormGender,
-      FirstName: event.target[6].value,
-      MiddleName: event.target[7].value,
-      LastName: event.target[8].value,
-      DOB: event.target[9].value,
-      ContactNo: event.target[10].value,
-      EmployeeCode: event.target[11].value,
-      DepartmentID: event.target[12].value,
-      PositionID: event.target[13].value,
-      DateOfJoining: event.target[14].value,
-      TerminateDate: event.target[15].value,
+      FirstName: event.target[5].value,
+      MiddleName: event.target[6].value,
+      LastName: event.target[7].value,
+      DOB: event.target[8].value,
+      ContactNo: event.target[9].value,
+      EmployeeCode: event.target[10].value,
+      // DepartmentID: event.target[12].value,
+      // PositionID: event.target[13].value,
+      // DateOfJoining: event.target[14].value,
+      // TerminateDate: event.target[15].value,
     };
     axios
       .post(process.env.REACT_APP_API_URL + "/api/employee", body, {
@@ -182,25 +182,21 @@ class Employee extends Component {
     newInfo.preventDefault();
     let body = {
       Email: newInfo.target[0].value,
-      // Password: newInfo.target[1].value,
+      
       Account: newInfo.target[1].value,
-      RoleID: newInfo.target[2].value,
+      // RoleID: newInfo.target[3].value,
       Gender: this.state.editFormGender,
-      FirstName: newInfo.target[5].value,
-      MiddleName: newInfo.target[6].value,
-      LastName: newInfo.target[7].value,
-      DOB: newInfo.target[8].value,
-      ContactNo: newInfo.target[9].value,
-      EmployeeCode: newInfo.target[10].value,
-      DepartmentID: newInfo.target[11].value,
-      PositionID: newInfo.target[12].value,
-      DateOfJoining: newInfo.target[13].value,
-      TerminateDate: newInfo.target[14].value,
+      FirstName: newInfo.target[4].value,
+      MiddleName: newInfo.target[5].value,
+      LastName: newInfo.target[6].value,
+      DOB: newInfo.target[7].value,
+      ContactNo: newInfo.target[8].value,
+      EmployeeCode: newInfo.target[9].value,
     };
     console.log("update", body);
     axios
       .put(
-        process.env.REACT_APP_API_URL + "/api/student/" + info["_id"],
+        process.env.REACT_APP_API_URL + "/api/employee/" + info["_id"],
         body, {
         headers: {
           authorization: localStorage.getItem("token") || ""

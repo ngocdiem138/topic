@@ -56,12 +56,12 @@ class EducationForm extends Component {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
-                Degree
+                Class
               </Form.Label>
               <Col sm={10} className="form-input">
                 <Form.Control
                   type="Text"
-                  placeholder="Degree "
+                  placeholder="Class "
                   required
                   value={this.state.DegreeData}
                   onChange={value => this.onDegreeDataChange(value)}
@@ -74,7 +74,8 @@ class EducationForm extends Component {
               </Form.Label>
               <Col sm={10} className="form-input">
                 <Form.Control
-                  type="Text"
+                  type="number"
+                  min={0}
                   placeholder="Grade"
                   required
                   value={this.state.GradeData}
@@ -88,7 +89,8 @@ class EducationForm extends Component {
               </Form.Label>
               <Col sm={10} className="form-input">
                 <Form.Control
-                  type="Text"
+                  type="number"
+                  min={0}
                   placeholder="Passing Of Year"
                   required
                   value={this.state.PassingOfYearData}
