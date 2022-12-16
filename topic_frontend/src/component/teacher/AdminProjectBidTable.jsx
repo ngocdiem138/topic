@@ -58,7 +58,7 @@ class AdminProjectBidTable extends Component {
         headerName: "Remark",
         field: "Remark",
         sortable: true,
-        width: 650,
+        width: 450,
         // filter: true ,
       },
 
@@ -99,7 +99,7 @@ class AdminProjectBidTable extends Component {
 
   loadProjectBidData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/admin/project-bid", {
+      .get(process.env.REACT_APP_API_URL + "/api/teacher/project-bid", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

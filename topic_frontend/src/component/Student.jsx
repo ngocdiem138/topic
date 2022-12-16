@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "./Employee.css";
+import "./Student.css";
 import axios from "axios";
-import EmployeeTable from "./EmployeeTable.jsx";
-import EmployeeForm from "./EmployeeForm.jsx";
-import EmployeeFormEdit from "./EmployeeFormEdit.jsx";
-import EmployeeInfo from "./EmployeeInfo.jsx";
+import EmployeeTable from "./StudentTable.jsx";
+import StudentForm from "./StudentForm.jsx";
+import StudentFormEdit from "./StudentFormEdit.jsx";
+import StudentInfo from "./StudentInfo.jsx";
 import { HashRouter as Router, Route } from "react-router-dom";
 import PersonalInfo from "./student/PersonalInfo.jsx";
 import Education from "./student/Education.jsx";
@@ -16,7 +16,7 @@ import WorkExperience from "./student/WorkExperience.jsx";
 
 
 
-class Employee extends Component {
+class Student extends Component {
   state = {
     table: true,
     editForm: false,
@@ -52,7 +52,7 @@ class Employee extends Component {
               {/* {this.state.EmpInfo?this.redirectF:<React.Fragment />} */}
               {this.state.table ? (
                 this.state.editForm ? (
-                  <EmployeeFormEdit
+                  <StudentFormEdit
                     onEmployeeEditUpdate={this.handleEmployeeEditUpdate}
                     onFormEditClose={this.handleEditFormClose}
                     editData={this.state.editData}
@@ -65,11 +65,11 @@ class Employee extends Component {
                       onAddEmployee={this.handleAddEmployee}
                       onEditEmployee={this.handleEditEmployee}
                       onEmpInfo={this.handleEmpInfo}
-                    /> : <EmployeeInfo data={this.state.EmpInfo} onBack={this.handleBack} />
+                    /> : <StudentInfo data={this.state.EmpInfo} onBack={this.handleBack} />
 
                   )
               ) : (
-                  <EmployeeForm
+                  <StudentForm
                     onEmployeeSubmit={this.handleEmployeeSubmit}
                     onFormClose={this.handleFormClose}
                     onGenderChange={this.handleAddFormGenderChange}
@@ -82,7 +82,7 @@ class Employee extends Component {
         {/* <Route
                    exact
                    path="/hr/student/info"
-                   render={props => <EmployeeInfo data={this.state.EmpInfo} onBack={this.handleBack}/>}
+                   render={props => <StudentInfo data={this.state.EmpInfo} onBack={this.handleBack}/>}
                  /> */}
         <Route
           exact
@@ -135,7 +135,7 @@ class Employee extends Component {
       LastName: event.target[7].value,
       DOB: event.target[8].value,
       ContactNo: event.target[9].value,
-      EmployeeCode: event.target[10].value,
+      StudentCode: event.target[10].value,
       // DepartmentID: event.target[12].value,
       // PositionID: event.target[13].value,
       // DateOfJoining: event.target[14].value,
@@ -191,7 +191,7 @@ class Employee extends Component {
       LastName: newInfo.target[6].value,
       DOB: newInfo.target[7].value,
       ContactNo: newInfo.target[8].value,
-      EmployeeCode: newInfo.target[9].value,
+      StudentCode: newInfo.target[9].value,
     };
     console.log("update", body);
     axios
@@ -230,5 +230,5 @@ class Employee extends Component {
   };
 }
 
-export default Employee;
+export default Student;
 

@@ -12,7 +12,7 @@ import Country from "../Country.jsx";
 import State from "../State.jsx";
 import City from "../City.jsx";
 import Company from "../Company.jsx";
-import Employee from "../Employee.jsx";
+import Student from "../Student.jsx";
 import Salary from "../Salary.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
@@ -56,7 +56,7 @@ function CompanyF() {
   return <Company />;
 }
 function EmployeeF() {
-  return <Employee />;
+  return <Student />;
 }
 function SalaryF() {
   return <Salary />;

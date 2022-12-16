@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./EmployeeTable.css";
+import "./StudentTable.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,8 +32,8 @@ class AdminEmployeeTable extends Component {
 
     columnDefs: [
       {
-        headerName: "Employee Code",
-        field: "EmployeeCode",
+        headerName: "Student Code",
+        field: "StudentCode",
         sortable: true,
         width: 140,
         // filter: true ,
@@ -173,7 +173,7 @@ class AdminEmployeeTable extends Component {
             LastName: data["LastName"],
             DOB: data["DOB"].slice(0, 10),
             ContactNo: data["ContactNo"],
-            EmployeeCode: data["EmployeeCode"],
+            StudentCode: data["StudentCode"],
             // DepartmentName: data["department"][0]["DepartmentName"],
             // PositionName: data["position"][0]["PositionName"],
             // DateOfJoining: data["DateOfJoining"].slice(0, 10)

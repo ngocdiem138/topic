@@ -169,20 +169,6 @@ class PersonalInfoFormEdit extends Component {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Emergency Contact No
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="text"
-                  placeholder="Emergency Contact No"
-                  required
-                  value={this.state.EmergencyContactNoData}
-                  onChange={value => this.onEmergencyContactNoDataChange(value)}
-                />
-              </Col>
-            </Form.Group>
 
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
@@ -200,20 +186,6 @@ class PersonalInfoFormEdit extends Component {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
-                PAN Card No
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="text"
-                  placeholder="PAN Card No"
-                  required
-                  value={this.state.PANcardNoData}
-                  onChange={value => this.onPANcardNoDataChange(value)}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
                 DOB
               </Form.Label>
               <Col sm={10} className="form-input">
@@ -225,76 +197,6 @@ class PersonalInfoFormEdit extends Component {
                   value={this.state.DOBData}
                   onChange={value => this.onDOBDataChange(value)}
                 />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Blood Group
-              </Form.Label>
-
-              <Col sm={10} className="form-input">
-                <Form.Control as="select" required>
-                  <option value="" disabled selected>
-                    Select your option
-                  </option>
-                  <option
-                    value="A+"
-                    selected={this.props.editData["BloodGroup"] == "A+"}
-                  >
-                    A+
-                  </option>
-                  <option
-                    value="A-"
-                    selected={this.props.editData["BloodGroup"] == "A-"}
-                  >
-                    A-
-                  </option>
-                  <option
-                    value="B+"
-                    selected={this.props.editData["BloodGroup"] == "B+"}
-                  >
-                    B+
-                  </option>
-                  <option
-                    value="B-"
-                    selected={this.props.editData["BloodGroup"] == "B-"}
-                  >
-                    B-
-                  </option>
-                  <option
-                    value="AB+"
-                    selected={this.props.editData["BloodGroup"] == "AB+"}
-                  >
-                    AB+
-                  </option>
-                  <option
-                    value="AB-"
-                    selected={this.props.editData["BloodGroup"] == "AB-"}
-                  >
-                    AB-
-                  </option>
-                  <option
-                    value="O+"
-                    selected={this.props.editData["BloodGroup"] == "O+"}
-                  >
-                    O+
-                  </option>
-                  <option
-                    value="O-"
-                    selected={this.props.editData["BloodGroup"] == "O-"}
-                  >
-                    O-
-                  </option>
-                  {/* 
-    A+
-    A-
-    B+
-    B-
-    AB+
-    AB-
-    O+
-    O- */}
-                </Form.Control>
               </Col>
             </Form.Group>
 

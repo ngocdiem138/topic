@@ -29,7 +29,7 @@ class AdminSalaryTable extends Component {
 
     columnDefs: [
       {
-        headerName: "Employee Name",
+        headerName: "Student Name",
         field: "EmployeeName",
         sortable: true
         // filter: true ,

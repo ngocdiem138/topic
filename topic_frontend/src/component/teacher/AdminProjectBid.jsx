@@ -131,7 +131,7 @@ class AdminProjectBid extends Component {
     };
     console.log("update", body);
     axios
-      .put(process.env.REACT_APP_API_URL + "/api/admin/project-bid/" + info["_id"], body, {
+      .put(process.env.REACT_APP_API_URL + "/api/teacher/project-bid/" + info["_id"], body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

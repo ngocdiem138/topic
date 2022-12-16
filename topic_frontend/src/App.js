@@ -54,7 +54,7 @@ class App extends Component {
       // Hr:
       //     id:hr@gmail.com
       //     pass:hr
-      // Employee:
+      // Student:
       //     id:emp@gmail.com
       //     pass:emp
       // `)
@@ -115,7 +115,7 @@ class App extends Component {
             path="/admin"
             render={props =>
               this.state.data["Account"] == 1 ? (
-                <DashboardAdmin
+                <DashboardTeacher
                   data={this.state.data}
                   onLogout={this.handleLogout}
                 />
@@ -236,7 +236,7 @@ class App extends Component {
               decodedData["FirstName"] + " " + decodedData["LastName"]
             );
             this.componentDidMount();
-            history.push("#/admin/role");
+            history.push("#/admin/project-bid");
           }
           if (decodedData.Account == 2) {
             // this.setState({ data: decodedData });

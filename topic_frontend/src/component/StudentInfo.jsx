@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import "./EmployeeInfo.css";
+import "./StudentInfo.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 
 
-export class EmployeeInfo extends Component {
+export class StudentInfo extends Component {
   render() {
     return (
       <div>
@@ -50,4 +50,4 @@ export class EmployeeInfo extends Component {
   }
 }
 
-export default EmployeeInfo;
+export default StudentInfo;

@@ -1,30 +1,18 @@
 import React, { Component } from "react";
-import "./EmployeeFormEdit.css";
+import "./StudentFormEdit.css";
 import axios from "axios";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
-class EmployeeFormEdit extends Component {
+class StudentFormEdit extends Component {
   state = {
-    roleData: [],
-    positionData: [],
-    departmentData: [],
     GenderData: this.props.editData["Gender"],
-
     EmailData: this.props.editData["Email"],
-    // PasswordData: "",
-
     FirstNameData: this.props.editData["FirstName"],
     MiddleNameData: this.props.editData["MiddleName"],
     LastNameData: this.props.editData["LastName"],
     DOBData: this.props.editData["DOB"].slice(0, 10),
     ContactNoData: this.props.editData["ContactNo"],
-    EmployeeCodeData: this.props.editData["EmployeeCode"],
-
-    DateOfJoiningData: this.props.editData["DateOfJoining"].slice(0, 10),
-    TerminateDateData: this.props.editData["TerminateDate"].slice(0, 10)
-
-    // value={this.state.EmployeeTitleData}
-    // onChange={value => this.onEmployeeTitleDataChange(value)}
+    StudentCodeData: this.props.editData["StudentCode"],
   };
   onEmailDataChange(e) {
     this.setState({ EmailData: e.target.value });
@@ -42,8 +30,8 @@ class EmployeeFormEdit extends Component {
   onContactNoDataChange(e) {
     this.setState({ ContactNoData: e.target.value });
   }
-  onEmployeeCodeDataChange(e) {
-    this.setState({ EmployeeCodeData: e.target.value });
+  onStudentCodeDataChange(e) {
+    this.setState({ StudentCodeData: e.target.value });
   }
   // onPasswordDataChange(e) {
   //   this.setState({ PasswordData: e.target.value });
@@ -142,21 +130,6 @@ class EmployeeFormEdit extends Component {
                 />
               </Col>
             </Form.Group>
-
-            {/* <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Password
-              </Form.Label>
-              <Col sm={10} className="form-input">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  required
-                  value={this.state.PasswordData}
-                  onChange={value => this.onPasswordDataChange(value)}
-                />
-              </Col>
-            </Form.Group> */}
 
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
@@ -293,8 +266,8 @@ class EmployeeFormEdit extends Component {
                   type="text"
                   placeholder="Employee Code"
                   required
-                  value={this.state.EmployeeCodeData}
-                  onChange={value => this.onEmployeeCodeDataChange(value)}
+                  value={this.state.StudentCodeData}
+                  onChange={value => this.onStudentCodeDataChange(value)}
                 />
               </Col>
             </Form.Group>
@@ -318,4 +291,4 @@ class EmployeeFormEdit extends Component {
   }
 }
 
-export default EmployeeFormEdit;
+export default StudentFormEdit;

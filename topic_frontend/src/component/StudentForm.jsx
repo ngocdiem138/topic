@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { Form, Button, Col, Row } from "react-bootstrap";
 
-class EmployeeForm extends Component {
+class StudentForm extends Component {
   state = {
     roleData: [],
     positionData: [],
@@ -231,14 +231,14 @@ class EmployeeForm extends Component {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
-                Employee/Teacher/Student Code
+                Student/Teacher/Student Code
               </Form.Label>
               <Col sm={10} className="form-input">
                 <Form.Control
                   name="code"
                   type="number"
                   min={0}
-                  placeholder="Employee/Teacher/Student Code"
+                  placeholder="Student/Teacher/Student Code"
                   value={this.state.code}
                   onChange={this.handleCodeChange}
                   required
@@ -271,4 +271,4 @@ class EmployeeForm extends Component {
   }
 }
 
-export default EmployeeForm;
+export default StudentForm;

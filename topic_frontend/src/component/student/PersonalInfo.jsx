@@ -55,14 +55,11 @@ class PersonalInfo extends Component {
     let body = {
       Gender: this.state.editFormGender,
       ContactNo: newInfo.target[5].value,
-      EmergencyContactNo: newInfo.target[6].value,
-      Email: newInfo.target[7].value,
-      PANcardNo: newInfo.target[8].value,
-      DOB: newInfo.target[9].value,
-      BloodGroup: newInfo.target[10].value,
-      Hobbies: newInfo.target[11].value,
-      PresentAddress: newInfo.target[12].value,
-      PermanetAddress: newInfo.target[13].value
+      Email: newInfo.target[6].value,
+      DOB: newInfo.target[7].value,
+      Hobbies: newInfo.target[8].value,
+      PresentAddress: newInfo.target[9].value,
+      PermanetAddress: newInfo.target[10].value
     };
     console.log("update", body);
     axios
