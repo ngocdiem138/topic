@@ -8,7 +8,6 @@ import StudentInfo from "./StudentInfo.jsx";
 import { HashRouter as Router, Route } from "react-router-dom";
 import PersonalInfo from "./student/PersonalInfo.jsx";
 import Education from "./student/Education.jsx";
-import FamilyInfo from "./student/FamilyInfo.jsx";
 
 class Student extends Component {
   state = {
@@ -62,11 +61,6 @@ class Student extends Component {
           }
         />
 
-        {/* <Route
-                   exact
-                   path="/hr/student/info"
-                   render={props => <StudentInfo data={this.state.EmpInfo} onBack={this.handleBack}/>}
-                 /> */}
         <Route
           exact
           path="/hr/student/info/personal-info"
@@ -76,11 +70,6 @@ class Student extends Component {
           exact
           path="/hr/student/info/education"
           render={props => <Education data={this.state.EmpInfo} back={true} />}
-        />
-        <Route
-          exact
-          path="/hr/student/info/family-info"
-          render={props => <FamilyInfo data={this.state.EmpInfo} back={true} />}
         />
       </Router>
     );

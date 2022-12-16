@@ -6,7 +6,6 @@ import { Redirect } from "react-router-dom";
 import NavBar from "../NavBar.jsx";
 import PersonalInfo from "./PersonalInfo.jsx";
 import Education from "./Education.jsx";
-import FamilyInfo from "./FamilyInfo.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
 
@@ -116,11 +115,6 @@ class DashboardHR extends Component {
                   exact
                   path="/student/:id/education"
                   render={props => <Education data={this.props.data} back={false}/>}
-                />
-                <Route
-                  exact
-                  path="/student/:id/family-info"
-                  render={props => <FamilyInfo data={this.props.data} back={false}/>}
                 />
                 <Route
                   exact
