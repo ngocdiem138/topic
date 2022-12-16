@@ -142,7 +142,7 @@ class Employee extends Component {
       // TerminateDate: event.target[15].value,
     };
     axios
-      .post(process.env.REACT_APP_API_URL + "/api/employee", body, {
+      .post(process.env.REACT_APP_API_URL + "/api/student", body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -196,7 +196,7 @@ class Employee extends Component {
     console.log("update", body);
     axios
       .put(
-        process.env.REACT_APP_API_URL + "/api/employee/" + info["_id"],
+        process.env.REACT_APP_API_URL + "/api/student/" + info["_id"],
         body, {
         headers: {
           authorization: localStorage.getItem("token") || ""

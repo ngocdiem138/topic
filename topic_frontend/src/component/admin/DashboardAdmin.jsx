@@ -14,7 +14,6 @@ import City from "../City.jsx";
 import Company from "../Company.jsx";
 import Employee from "../Employee.jsx";
 import Salary from "../Salary.jsx";
-import LeaveApplicationHR from "./LeaveApplicationHR.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
 
@@ -61,9 +60,6 @@ function EmployeeF() {
 }
 function SalaryF() {
   return <Salary />;
-}
-function LeaveApplicationHRF() {
-  return <LeaveApplicationHR />;
 }
 
 // function HRPortalF() {
@@ -229,11 +225,6 @@ class DashboardAdmin extends Component {
                   path="/hr/city"
                   exact
                   component={CityF}
-                />
-                <Route
-                  path="/hr/leave-application-hr"
-                  exact
-                  component={LeaveApplicationHRF}
                 />
                  {/* <Route
                   path="/hr/portal-master"

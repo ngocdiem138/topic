@@ -150,7 +150,7 @@ class AdminEmployeeTable extends Component {
 
   loadEmployeeData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/employee", {
+      .get(process.env.REACT_APP_API_URL + "/api/student", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -193,7 +193,7 @@ class AdminEmployeeTable extends Component {
     if (window.confirm("Are you sure to delete this record? ") == true) {
       window.alert("You are not allowed to perform this operation");
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/employee/" + e, {
+        .delete(process.env.REACT_APP_API_URL + "/api/student/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }

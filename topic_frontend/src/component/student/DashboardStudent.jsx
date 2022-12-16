@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./DashboardEmployee.css";
+import "./DashboardStudent.css";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { Switch } from "react-router";
 import { Redirect } from "react-router-dom";
@@ -8,7 +8,6 @@ import PersonalInfo from "./PersonalInfo.jsx";
 import Education from "./Education.jsx";
 import FamilyInfo from "./FamilyInfo.jsx";
 import WorkExperience from "./WorkExperience.jsx";
-import LeaveApplicationEmp from "./LeaveApplicationEmp.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
 
@@ -179,11 +178,6 @@ class DashboardHR extends Component {
                   exact
                   path="/student/:id/topic"
                   render={props => <StudentProjectBid data={this.props.data} back={false}/>}
-                />
-                <Route
-                  exact
-                  path="/student/:id/leave-application-emp"
-                  render={props => <LeaveApplicationEmp data={this.props.data} />}
                 />
                
                 {/* <Route

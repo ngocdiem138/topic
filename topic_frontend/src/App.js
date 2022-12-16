@@ -6,9 +6,9 @@ import jwt from "jsonwebtoken";
 import Login from "./component/Login.jsx";
 import Temp from "./component/Temp.jsx";
 import NotFound404 from "./component/NotFound404.jsx";
-import DashboardAdmin from "./component/teacher/DashboardAdmin.jsx";
+import DashboardTeacher from "./component/teacher/DashboardTeacher.jsx";
 import DashboardAdmin from "./component/admin/DashboardAdmin.jsx";
-import DashboardEmployee from "./component/student/DashboardEmployee.jsx";
+import DashboardEmployee from "./component/student/DashboardStudent.jsx";
 import { Switch } from "react-router";
 
 import {
@@ -68,7 +68,7 @@ class App extends Component {
       // <div>{this.state.isLogin ? (
       //   <div>
 
-      //   <DashboardAdmin data={this.state.data}/>
+      //   <DashboardTeacher data={this.state.data}/>
       //   </div>
       // ) : (
       // <Login
@@ -77,8 +77,8 @@ class App extends Component {
       //   pass={this.state.pass}
       // />
       // )}</div>
-      //  <DashboardAdmin data={this.state.data}/>
-      //  <DashboardAdmin  data={this.state.data}/>
+      //  <DashboardTeacher data={this.state.data}/>
+      //  <DashboardTeacher  data={this.state.data}/>
       //  <DashboardEmployee   data={this.state.data}/>
       //  <Temp />
       // <NotFound404/>
@@ -96,7 +96,7 @@ class App extends Component {
 
                 this.state.data["Account"] == 2 ? (
                   // <Dashboard />
-                  <Redirect to="/hr" />
+                  <Redirect to="/hr/student" />
                 ) : //
                   this.state.data["Account"] == 3 ? (
                     // <Dashboard />

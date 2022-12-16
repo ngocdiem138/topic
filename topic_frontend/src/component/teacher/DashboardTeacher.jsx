@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./DashboardAdmin.css";
+import "./DashboardTeacher.css";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { Switch } from "react-router";
 import { Redirect } from "react-router-dom";
@@ -44,7 +44,7 @@ function AdminProjectBidF() {
   return <AdminProjectBid />;
 }
 
-class DashboardAdmin extends Component {
+class DashboardTeacher extends Component {
   state = {
     redirect: true,
     checked: true 
@@ -172,4 +172,4 @@ class DashboardAdmin extends Component {
   }
 }
 
-export default DashboardAdmin;
+export default DashboardTeacher;
