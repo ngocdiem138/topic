@@ -9,12 +9,6 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import PersonalInfo from "./student/PersonalInfo.jsx";
 import Education from "./student/Education.jsx";
 import FamilyInfo from "./student/FamilyInfo.jsx";
-import WorkExperience from "./student/WorkExperience.jsx";
-
-
-
-
-
 
 class Student extends Component {
   state = {
@@ -27,19 +21,8 @@ class Student extends Component {
     EmpInfoBool: false,
 
   };
-  // redirectF=()=>{
-  // //  if(this.state.EmpInfo==true){
-  //   this.setState({EmpInfo:false})
-  //   console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-  //   return <Redirect to="hr/student/info" />
-  // //  }
-  // }
 
   render() {
-    // if (this.state.EmpInfo) {
-    //   this.setState({EmpInfo:false});
-    //   return <Redirect to="hr/student/info" />
-    // }
 
     return (
       <Router>
@@ -99,13 +82,6 @@ class Student extends Component {
           path="/hr/student/info/family-info"
           render={props => <FamilyInfo data={this.state.EmpInfo} back={true} />}
         />
-        <Route
-          exact
-          path="/hr/student/info/work-experience"
-          render={props => <WorkExperience data={this.state.EmpInfo} back={true} />}
-        />
-
-
       </Router>
     );
   }

@@ -7,7 +7,6 @@ import NavBar from "../NavBar.jsx";
 import PersonalInfo from "./PersonalInfo.jsx";
 import Education from "./Education.jsx";
 import FamilyInfo from "./FamilyInfo.jsx";
-import WorkExperience from "./WorkExperience.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
 
@@ -84,30 +83,6 @@ class DashboardHR extends Component {
                     Personal Information
                   </Link>
                 </li>
-                {/* <li>
-                  <Link
-                    to={
-                      "/student/" + this.props.data["_id"] + "/education"
-                    }
-                  >
-                    <FontAwesomeIcon
-                      icon={faUniversity}
-                      className="sidebar-icon"
-                    />
-                    Education
-                  </Link>
-                </li> */}
-                {/* <li>
-                  <Link to={
-                      "/student/" + this.props.data["_id"] + "/family-info"
-                    }>
-                    <FontAwesomeIcon
-                      icon={faMale}
-                      className="sidebar-icon"
-                    />
-                    Groups
-                  </Link>
-                </li> */}
                 <li>
                   <Link to={
                       "/student/" + this.props.data["_id"] + "/topic"
@@ -119,28 +94,6 @@ class DashboardHR extends Component {
                     Topic
                   </Link>
                 </li>
-                {/* <li>
-                  <Link to={
-                      "/student/" + this.props.data["_id"] + "/work-experience"
-                    }>
-                    <FontAwesomeIcon
-                      icon={faBriefcase}
-                      className="sidebar-icon"
-                    />
-                    WorkExp
-                  </Link>
-                </li>
-                <li>
-                  <Link to={
-                      "/student/" + this.props.data["_id"] + "/leave-application-emp"
-                    }>
-                    <FontAwesomeIcon
-                      icon={faFileAlt}
-                      className="sidebar-icon"
-                    />
-                    Leave Application
-                  </Link>
-                </li> */}
               </ul>
             </div>
             {/* <div id="sidebar-top-content" /> */}
@@ -171,28 +124,10 @@ class DashboardHR extends Component {
                 />
                 <Route
                   exact
-                  path="/student/:id/work-experience"
-                  render={props => <WorkExperience data={this.props.data} back={false}/>}
-                />
-                <Route
-                  exact
                   path="/student/:id/topic"
                   render={props => <StudentProjectBid data={this.props.data} back={false}/>}
                 />
                
-                {/* <Route
-                  exact
-                  path="/student"
-                  render={() => (
-                    <Redirect
-                      to={
-                        "/student/" +
-                        this.props.data["_id"] +
-                        "/personal-info"
-                      }
-                    />
-                  )}
-                /> */}
                 <Route
                   render={
                     () => <NotFound404/>
