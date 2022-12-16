@@ -4,13 +4,13 @@ const {Employee} = require('../model/Employee')
 const {RoleValidation} = require('../middleware/RoleValidation');
 
 const findAll = async (req, res) => {
-    // Role.find()
+    // Role.find({})
     //     .populate('company')
     //     .exec(function (err, role) {
     //         res.send(role);
     //     });
-    const users = await Role.find({});
-    res.status(200).send(users);
+    const roles = await Role.find({});
+    res.status(200).send(roles);
 }
 const addRole = async (req, res) => {
     Joi.validate(req.body, RoleValidation, (err, result) => {

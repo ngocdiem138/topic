@@ -2,7 +2,7 @@ const Joi = require('joi')
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { Employee } = require('../model/Employee.js');
-let jwtKey = process.env.JWTKEY;
+let jwtKey = 'set_your_jwt_key';
 
 const login = async (req, res) => {
     Joi.validate(

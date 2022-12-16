@@ -21,9 +21,15 @@ const projectSchema = new mongoose.Schema({
     /////////////****************** */
     portals: [{ type: mongoose.Schema.Types.ObjectId, ref: "Portal" }]
 });
+
+const conn = mongoose.createConnection('mongodb+srv://ngocdiemxt2001:138200113@cluster0.rk8c2nn.mongodb.net/test?retryWrites=true&w=majority');
+autoIncrement.initialize(conn);
+
 projectSchema.plugin(autoIncrement.plugin, {
     model: "Project",
     field: "ID"
 });
 
 const Project = mongoose.model("Project", projectSchema);
+
+module.exports = {Project}
