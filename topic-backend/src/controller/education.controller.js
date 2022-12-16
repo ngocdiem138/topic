@@ -2,7 +2,7 @@ const { Project } = require('../model/Project');
 const Joi = require('joi');
 const { ProjectValidation } = require('../middleware/ProjectValidation');
 const { Education } = require('../model/Education');
-const { Employee } = require('../model/Employee');
+const { Student } = require('../model/Student');
 const { EducationValidation } = require('../middleware/EducationValidation');
 jwt = require('jsonwebtoken');
 let jwtKey = 'set_your_jwt_key';
@@ -12,7 +12,7 @@ const findOneByUserId = async (req, res) => {
   if (typeof Header !== 'undefined') {
     jwt.verify(Header, jwtKey, (err, authData) => {
       const id = authData._id;
-      Employee.findById(id)
+      Student.findById(id)
           .exec(function (err, emp) {
             if (err) {
               console.log(err);
@@ -26,9 +26,9 @@ const findOneByUserId = async (req, res) => {
 };
 
 const findById = async (req, res) => {
-  Employee.findById(req.params.id)
-      .exec(function (err, employee) {
-        res.send([employee.education]);
+  Student.findById(req.params.id)
+      .exec(function (err, student) {
+        res.send([student.education]);
       });
 };
 

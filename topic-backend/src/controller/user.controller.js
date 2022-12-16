@@ -1,30 +1,29 @@
 const Joi = require('joi');
-const { Employee } = require('../model/Employee');
+const { Student } = require('../model/Student');
 const {
-  EmployeeValidation,
-  EmployeeValidationUpdate,
-  EmployeePersonalInfoValidation
-} = require('../middleware/EmployeeValidation');
+  StudentValidation,
+  StudentValidationUpdate,
+  StudentPersonalInfoValidation
+} = require('../middleware/StudentValidation');
 
 
 const findAllUser = async (req, res) => {
-  Employee.find()
-      .exec(function (err, employee) {
-        res.send(employee);
+  Student.find()
+      .exec(function (err, student) {
+        res.send(student);
       });
 };
 
 const addUser = async (req, res) => {
-  Joi.validate(req.body, EmployeeValidation, (err, result) => {
+  Joi.validate(req.body, StudentValidation, (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err.details[0].message);
     } else {
-      let newEmployee;
-      newEmployee = {
+      let newStudent;
+      newStudent = {
         Email: req.body.Email,
         Password: req.body.Password,
-        role: req.body.RoleID,
         Account: req.body.Account,
         Gender: req.body.Gender,
         FirstName: req.body.FirstName,
@@ -32,17 +31,17 @@ const addUser = async (req, res) => {
         LastName: req.body.LastName,
         DOB: req.body.DOB,
         ContactNo: req.body.ContactNo,
-        EmployeeCode: req.body.EmployeeCode,
+        StudentCode: req.body.StudentCode,
         Education: {}
       };
 
-      Employee.create(newEmployee, function (err, employee) {
+      Student.create(newStudent, function (err, student) {
         if (err) {
           console.log(err);
           res.send('error');
         } else {
-          res.send(employee);
-          console.log('new employee Saved');
+          res.send(student);
+          console.log('new student Saved');
         }
       });
       console.log(req.body);
@@ -51,33 +50,32 @@ const addUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  Joi.validate(req.body, EmployeeValidationUpdate, (err, result) => {
+  Joi.validate(req.body, StudentValidationUpdate, (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err.details[0].message);
     } else {
-      let newEmployee;
-      newEmployee = {
+      let newStudent;
+      newStudent = {
         Email: req.body.Email,
         // Password: req.body.Password,
         Account: req.body.Account,
-        role: req.body.RoleID,
         Gender: req.body.Gender,
         FirstName: req.body.FirstName,
         MiddleName: req.body.MiddleName,
         LastName: req.body.LastName,
         DOB: req.body.DOB,
         ContactNo: req.body.ContactNo,
-        EmployeeCode: req.body.EmployeeCode
+        StudentCode: req.body.StudentCode
       };
-      Employee.findByIdAndUpdate(req.params.id, newEmployee, function (
+      Student.findByIdAndUpdate(req.params.id, newStudent, function (
           err,
-          employee
+          student
       ) {
         if (err) {
           res.send('error');
         } else {
-          res.send(newEmployee);
+          res.send(newStudent);
         }
       });
     }
@@ -87,10 +85,10 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  Employee.findByIdAndRemove({ _id: req.params.id }, function (err, employee) {
+  Student.findByIdAndRemove({ _id: req.params.id }, function (err, student) {
     if (!err) {
-      console.log(' state deleted');
-      res.send(employee);
+      console.log('state deleted');
+      res.send(student);
     } else {
       console.log(err);
       res.send('error');
@@ -103,20 +101,20 @@ const deleteUser = async (req, res) => {
 
 const findOneStudent = async (req, res) => {
   console.log('personal-info', req.params.id);
-  Employee.findById(req.params.id)
-      .exec(function (err, employee) {
-        res.send(employee);
+  Student.findById(req.params.id)
+      .exec(function (err, student) {
+        res.send(student);
       });
 };
 
 const updateOneStudent = async (req, res) => {
-  Joi.validate(req.body, EmployeePersonalInfoValidation, (err, result) => {
+  Joi.validate(req.body, StudentPersonalInfoValidation, (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err.details[0].message);
     } else {
-      let newEmployee;
-      newEmployee = {
+      let newStudent;
+      newStudent = {
         ContactNo: req.body.ContactNo,
         DOB: req.body.DOB,
         Email: req.body.Email,
@@ -125,14 +123,14 @@ const updateOneStudent = async (req, res) => {
         PermanetAddress: req.body.PermanetAddress,
         PresentAddress: req.body.PresentAddress
       };
-      Employee.findByIdAndUpdate(
+      Student.findByIdAndUpdate(
           req.params.id,
           {
-            $set: newEmployee
+            $set: newStudent
           },
           function (err, numberAffected) {
             console.log(numberAffected);
-            res.send(newEmployee);
+            res.send(newStudent);
           }
       );
     }

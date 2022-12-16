@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-let jwtKey = 'set_your_jwt_key'
+let jwtKey = 'set_your_jwt_key';
 
-function verifyAdmin(req, res, next) {
+function verifyTeacher(req, res, next) {
   console.log(req.headers['authorization']);
   const Header = req.headers['authorization'];
 
@@ -26,7 +26,7 @@ function verifyAdmin(req, res, next) {
   }
 }
 
-function verifyAdminHR(req, res, next) {
+function verifyTeacherAdmin(req, res, next) {
   console.log(req.headers['authorization']);
   const Header = req.headers['authorization'];
 
@@ -51,7 +51,7 @@ function verifyAdminHR(req, res, next) {
   }
 }
 
-function verifyHR(req, res, next) {
+function verifyAdmin(req, res, next) {
   console.log(req.headers['authorization']);
   const Header = req.headers['authorization'];
 
@@ -76,7 +76,7 @@ function verifyHR(req, res, next) {
   }
 }
 
-function verifyHREmployee(req, res, next) {
+function verifyAdminStudent(req, res, next) {
   console.log(req.headers['authorization']);
   const Header = req.headers['authorization'];
 
@@ -107,18 +107,18 @@ function verifyHREmployee(req, res, next) {
   }
 }
 
-function verifyEmployee(req, res, next) {
+function verifyStudent(req, res, next) {
   console.log(req.headers['authorization']);
   const Header = req.headers['authorization'];
 
   if (typeof Header !== 'undefined') {
     // decodedData = jwt.decode(req.headers['authorization']);
     // if(decodedData.Account)
-    console.log("err", 1)
+    console.log('err', 1);
     jwt.verify(Header, jwtKey, (err, authData) => {
-      console.log("err", 2)
+      console.log('err', 2);
       if (err) {
-        console.log("err", err)
+        console.log('err', err);
         res.sendStatus(403);
       } else {
         if (authData._id === req.params.id) {
@@ -140,9 +140,9 @@ function verifyEmployee(req, res, next) {
 }
 
 module.exports = {
-  verifyAdminHR,
-  verifyEmployee,
+  verifyTeacherAdmin,
+  verifyStudent,
+  verifyTeacher,
   verifyAdmin,
-  verifyHR,
-  verifyHREmployee
+  verifyAdminStudent
 };
