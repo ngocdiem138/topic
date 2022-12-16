@@ -127,7 +127,7 @@ class DashboardAdmin extends Component {
               {/* //table */}
               {/* <RoleAdmin/> */}
               <Switch>
-                <Route exact path="/admin/role" component={RoleAdminF} />
+                <Route exact path="/admin/project-bid" component={AdminProjectBidF} />
                 {/* <Route path="/admin/role/form" exact component={RoleFormF} /> */}
                 <Route
                   path="/admin/position"

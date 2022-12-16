@@ -43,39 +43,22 @@ class AdminProjectBidTable extends Component {
       {
         headerName: "Project Title",
         field: "ProjectTitle",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Portal",
-        field: "PortalName",
-        sortable: true
+        sortable: true,
+        // width: "300px",
         // filter: true ,
       },
       {
         headerName: "Project URL",
         field: "ProjectURL",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Time",
-        field: "EstimatedTime",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Cost",
-        field: "EstimatedCost",
         sortable: true,
-        type: "numberColumn",
-        filter: 'agNumberColumnFilter'
+        // width: "300px",
         // filter: true ,
       },
       {
         headerName: "Remark",
         field: "Remark",
-        sortable: true
+        sortable: true,
+        width: 650,
         // filter: true ,
       },
 
@@ -103,7 +86,7 @@ class AdminProjectBidTable extends Component {
     rowData: [],
     defaultColDef: {
       resizable: true,
-      width: 200,
+      width: 350,
       filter: "agTextColumnFilter"
       // filter: true ,
     },

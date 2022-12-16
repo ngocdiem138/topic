@@ -26,20 +26,6 @@ class StudentProjectBidTable extends Component {
     loading: true,
 
     columnDefs: [
-      // {
-      //   headerName: "",
-      //   field: "",
-      //   sortable: true
-      //   // filter: true ,
-      // },
-      // {
-      //   headerName: "",
-      //   field: "",
-      //   sortable: true,
-      //   type: "numberColumn",
-      //   filter: 'agNumberColumnFilter'
-      //   // filter: true ,
-      // },
       {
         headerName: "Project Title",
         field: "ProjectTitle",
@@ -47,29 +33,9 @@ class StudentProjectBidTable extends Component {
         // filter: true ,
       },
       {
-        headerName: "Portal",
-        field: "PortalName",
-        sortable: true
-        // filter: true ,
-      },
-      {
         headerName: "Project URL",
         field: "ProjectURL",
         sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Time",
-        field: "EstimatedTime",
-        sortable: true
-        // filter: true ,
-      },
-      {
-        headerName: "Estimated Cost",
-        field: "EstimatedCost",
-        sortable: true,
-        type: "numberColumn",
-        filter: 'agNumberColumnFilter'
         // filter: true ,
       },
       {
@@ -134,8 +100,8 @@ class StudentProjectBidTable extends Component {
             ProjectTitle: data["ProjectTitle"],
             // PortalName: data["portals"][0]["PortalName"],
             ProjectURL: data["ProjectURL"],
-            EstimatedTime: data["EstimatedTime"],
-            EstimatedCost: data["EstimatedCost"],
+            // EstimatedTime: data["EstimatedTime"],
+            // EstimatedCost: data["EstimatedCost"],
             Remark: data["Remark"],
 
           };

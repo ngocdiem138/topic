@@ -91,7 +91,7 @@ class App extends Component {
             render={props =>
               this.state.data["Account"] == 1 ? (
                 // <Dashboard />
-                <Redirect to="/admin" />
+                <Redirect to="/admin/project-bid" />
               ) : // <Login OnLogin={this.handleLogin}/>
 
                 this.state.data["Account"] == 2 ? (
@@ -100,7 +100,7 @@ class App extends Component {
                 ) : //
                   this.state.data["Account"] == 3 ? (
                     // <Dashboard />
-                    <Redirect to="/student" />
+                    <Redirect to={"/student/"+this.state.data._id+"/personal-info"} />
                   ) : (
                       <Login
                         onSubmit={this.handleSubmit}
