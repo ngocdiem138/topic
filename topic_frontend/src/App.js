@@ -7,7 +7,7 @@ import Login from "./component/Login.jsx";
 import Temp from "./component/Temp.jsx";
 import NotFound404 from "./component/NotFound404.jsx";
 import DashboardAdmin from "./component/teacher/DashboardAdmin.jsx";
-import DashboardHR from "./component/admin/DashboardHR.jsx";
+import DashboardAdmin from "./component/admin/DashboardAdmin.jsx";
 import DashboardEmployee from "./component/student/DashboardEmployee.jsx";
 import { Switch } from "react-router";
 
@@ -78,7 +78,7 @@ class App extends Component {
       // />
       // )}</div>
       //  <DashboardAdmin data={this.state.data}/>
-      //  <DashboardHR  data={this.state.data}/>
+      //  <DashboardAdmin  data={this.state.data}/>
       //  <DashboardEmployee   data={this.state.data}/>
       //  <Temp />
       // <NotFound404/>
@@ -129,7 +129,7 @@ class App extends Component {
             path="/hr"
             render={props =>
               this.state.data["Account"] == 2 ? (
-                <DashboardHR
+                <DashboardAdmin
                   data={this.state.data}
                   onLogout={this.handleLogout}
                 />

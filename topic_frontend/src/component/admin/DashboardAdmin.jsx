@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./DashboardHR.css";
+import "./DashboardAdmin.css";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { Switch } from "react-router";
 import { Redirect } from "react-router-dom";
@@ -73,7 +73,7 @@ function LeaveApplicationHRF() {
 //   return <HRProjectBid />;
 // }
 
-class DashboardHR extends Component {
+class DashboardAdmin extends Component {
   state = {
     redirect: true,
     checked: true 
@@ -261,4 +261,4 @@ class DashboardHR extends Component {
   }
 }
 
-export default DashboardHR;
+export default DashboardAdmin;
