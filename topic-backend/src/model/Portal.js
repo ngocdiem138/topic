@@ -9,9 +9,15 @@ const portalSchema = new mongoose.Schema({
     PortalName: { type: String, required: true },
     Status: { type: Number, required: true }
 });
+
+const conn = mongoose.createConnection('mongodb+srv://ngocdiemxt2001:138200113@cluster0.rk8c2nn.mongodb.net/test?retryWrites=true&w=majority');
+autoIncrement.initialize(conn);
+
 portalSchema.plugin(autoIncrement.plugin, {
     model: "Portal",
     field: "ID"
 });
 
 const Portal = mongoose.model("Portal", portalSchema);
+
+module.exports = {Portal}

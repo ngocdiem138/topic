@@ -38,7 +38,6 @@ mongoose
 const conn = mongoose.createConnection(mongoURI);
 autoIncrement.initialize(conn);
 
-// autoIncrement.initialize(mongoose.connection);
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 

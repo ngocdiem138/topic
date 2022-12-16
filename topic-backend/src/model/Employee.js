@@ -47,4 +47,4 @@ employeeSchema.plugin(autoIncrement.plugin, {
 
 const Employee = mongoose.model("Employee", employeeSchema);
 
-module.exports = Employee
+module.exports = {Employee}

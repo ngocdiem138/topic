@@ -1,15 +1,5 @@
-const express = require('express'),
-    mongoose = require('mongoose'),
-    autoIncrement = require('mongoose-auto-increment'),
-    Joi = require('joi'),
-    app = express();
-jwt = require('jsonwebtoken');
-require('dotenv').config();
-
-//connecting to mongodb
-let mongoURI = process.env.DATABASEURL;
-//setting up jwt token
-let jwtKey = process.env.JWTKEY;
+const jwt = require('jsonwebtoken');
+let jwtKey = 'set_your_jwt_key'
 
 function verifyAdmin(req, res, next) {
   console.log(req.headers['authorization']);
@@ -102,15 +92,10 @@ function verifyHREmployee(req, res, next) {
           next();
         } else if (authData.Account === 3) {
           if (authData._id === req.params.id) {
-
-
             next();
           } else {
             res.sendStatus(403);
-
           }
-
-
         } else {
           res.sendStatus(403);
         }

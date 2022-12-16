@@ -6,9 +6,15 @@ const workExperienceSchema = new mongoose.Schema({
     FromDate: { type: Date, required: true },
     ToDate: { type: Date, required: true }
 });
+
+const conn = mongoose.createConnection('mongodb+srv://ngocdiemxt2001:138200113@cluster0.rk8c2nn.mongodb.net/test?retryWrites=true&w=majority');
+autoIncrement.initialize(conn);
+
 workExperienceSchema.plugin(autoIncrement.plugin, {
     model: "WorkExperience",
     field: "WorkExperienceID"
 });
 
 const WorkExperience = mongoose.model("WorkExperience", workExperienceSchema);
+
+module.exports = {WorkExperience}
