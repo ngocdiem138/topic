@@ -21,7 +21,7 @@ const addProject = async (req, res) => {
   if (typeof Header !== 'undefined') {
     jwt.verify(Header, jwtKey, (err, authData) => {
       const id = authData._id;
-      Joi.validate(req.body, ProjectValidation, (err, result) => {
+      Joi.validate(req.body, (err, result) => {
         if (err) {
           console.log(err);
           res.status(400).send(err.details[0].message);
@@ -31,7 +31,8 @@ const addProject = async (req, res) => {
             ProjectTitle: req.body.ProjectTitle,
             ProjectURL: req.body.ProjectURL,
             ProjectDesc: req.body.ProjectDesc,
-            Remark: req.body.Remark,
+            Remark: " ",
+            Status: req.body.Status,
             CreatedBy: id
           };
           Project.create(project, function (err, project) {
@@ -77,7 +78,7 @@ const updateProject = async (req, res) => {
 };
 
 const updateProjectOfStudent = async (req, res) => {
-  Joi.validate(req.body, ProjectValidation, (err, result) => {
+  Joi.validate(req.body, (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err.details[0].message);
@@ -107,10 +108,12 @@ const updateProjectOfStudent = async (req, res) => {
 
 const findOneByUserId = async (req, res) => {
   const Header = req.headers['authorization'];
+  console.log("Header",Header);
   if (typeof Header !== 'undefined') {
     jwt.verify(Header, jwtKey, (err, authData) => {
       const id = authData._id;
-      Project.findOne({
+      console.log("id",id);
+      Project.find({
         CreatedBy: id
       }).exec(function (err, project) {
         if (err) {

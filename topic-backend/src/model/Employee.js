@@ -10,7 +10,7 @@ const employeeSchema = new mongoose.Schema({
     Password: { type: String, required: true },
     Gender: { type: String, required: true },
     DOB: { type: Date, required: true },
-    DateOfJoining: { type: Date, required: true },
+    DateOfJoining: { type: Date },
     TerminateDate: { type: Date },
     Deleted: { type: Boolean },
     Photo: { type: String },
@@ -47,4 +47,4 @@ employeeSchema.plugin(autoIncrement.plugin, {
 
 const Employee = mongoose.model("Employee", employeeSchema);
 
-module.exports = {Employee}
+module.exports = { Employee }

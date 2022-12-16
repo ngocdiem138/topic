@@ -23,7 +23,7 @@ const EmployeeValidation = Joi.object().keys({
         .max(100)
         .required(),
     DOB: Joi.date().required(),
-    DateOfJoining: Joi.date().required(),
+    DateOfJoining: Joi.date().optional(),
     TerminateDate: Joi.date().optional(),
     Deleted: Joi.optional(),
     Photo: Joi.optional(),
@@ -58,7 +58,7 @@ const EmployeeValidationUpdate = Joi.object().keys({
         .max(100)
         .required(),
     DOB: Joi.date().required(),
-    DateOfJoining: Joi.date().required(),
+    DateOfJoining: Joi.date().optional(),
     TerminateDate: Joi.date().optional(),
     Deleted: Joi.optional(),
     Photo: Joi.optional(),

@@ -114,8 +114,11 @@ function verifyEmployee(req, res, next) {
   if (typeof Header !== 'undefined') {
     // decodedData = jwt.decode(req.headers['authorization']);
     // if(decodedData.Account)
+    console.log("err", 1)
     jwt.verify(Header, jwtKey, (err, authData) => {
+      console.log("err", 2)
       if (err) {
+        console.log("err", err)
         res.sendStatus(403);
       } else {
         if (authData._id === req.params.id) {

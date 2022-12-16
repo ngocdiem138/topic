@@ -28,7 +28,7 @@ const findOneByUserId = async (req, res) => {
 const findById = async (req, res) => {
   Employee.findById(req.params.id)
       .exec(function (err, employee) {
-        res.send(employee);
+        res.send([employee.education]);
       });
 };
 

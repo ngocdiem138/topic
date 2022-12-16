@@ -14,7 +14,7 @@ const projectSchema = new mongoose.Schema({
   ProjectURL: { type: String },
   Remark: { type: String },
   ResourceID: { type: Number },
-  Status: { type: Number, required: true },
+  Status: { type: Number },
   /////////////****************** */
   // PortalName: { type: String },
   // Portals: 2
