@@ -91,7 +91,6 @@ class TeacherProjectBidTable extends Component {
           let temp = {
             data,
             ProjectTitle: data["ProjectTitle"],
-            // PortalName: data["portals"][0]["PortalName"],
             ProjectURL: data["ProjectURL"],
             EstimatedTime: data["EstimatedTime"],
             EstimatedCost: data["EstimatedCost"],
@@ -147,14 +146,6 @@ class TeacherProjectBidTable extends Component {
     return (
       <div id="table-outer-div-scroll">
         <h2 id="role-title">Topic Details</h2>
-        {/* <Button
-          variant="primary"
-          id="add-button"
-          onClick={this.props.onAddProjectBid}
-        >
-          <FontAwesomeIcon icon={faPlus} id="plus-icon" />
-          Add
-        </Button> */}
 
         <div id="clear-both" />
 
@@ -162,12 +153,6 @@ class TeacherProjectBidTable extends Component {
           <div
             id="table-div"
             className="ag-theme-balham"
-          //   style={
-          //     {
-          //     height: "500px",
-          //     width: "100%"
-          //   }
-          // }
           >
             <AgGridReact
               columnDefs={this.state.columnDefs}

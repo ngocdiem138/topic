@@ -4,20 +4,6 @@ import axios from "axios";
 import TeacherProjectBidTable from "./TeacherProjectBidTable.jsx";
 import TeacherProjectBidForm from "./TeacherProjectBidForm.jsx";
 import TeacherProjectBidFormEdit from "./TeacherProjectBidFormEdit.jsx";
-// import { HashRouter as Router, Route, Link } from "react-router-dom";
-
-// function AdminProjectBidTableF() {
-//   return <TeacherProjectBidTable/>;
-// }
-// function AdminProjectBidFormF() {
-//   return  <TeacherProjectBidForm onProjectBidSubmit={handleProjectBidSubmit}/>;
-// }
-
-// function handleProjectBidSubmit(e) {
-//   e.preventDefault();
-//   console.log(e);
-
-// }
 
 class TeacherProjectBid extends Component {
   state = {
@@ -27,9 +13,7 @@ class TeacherProjectBid extends Component {
   };
 
   render() {
-    // let value=(this.props.pass) ? undefined : "";<i class="fas fa-plus"></i>
     return (
-      //  <Router>
       <React.Fragment>
         {this.state.table ? (
           this.state.editForm ? (
@@ -51,14 +35,7 @@ class TeacherProjectBid extends Component {
           />
         )}
 
-        {/* <div>fenil</div> */}
-        {/* <Route path="/admin/ProjectBid/table" exact component={TeacherProjectBidTable} /> */}
-        {/* <Route path="/admin/ProjectBid/form" exact component={() => <TeacherProjectBidForm onProjectBidSubmit={this.handleProjectBidSubmit} />} /> */}
-
-        {/* <TeacherProjectBidTable/> */}
         </React.Fragment>
-
-      //  </Router>
     );
   }
   handleProjectBidSubmit = event => {
@@ -73,8 +50,6 @@ class TeacherProjectBid extends Component {
       Status:event.target[4].value,
       Remark:event.target[5].value,
     };
-    //  let body= "CompanyID=" + event.target[0].value + "&ProjectBid=" + event.target[1].value;
-    //  let body= "FenilKaneria";
     axios
       .post(process.env.REACT_APP_API_URL + "/api/admin/project-bid", body, {
         headers: {
@@ -88,9 +63,6 @@ class TeacherProjectBid extends Component {
       .catch(err => {
         console.log(err);
       });
-    // this.setState({ loading: true });
-    // this.login(event.target[0].value, event.target[1].value);
-    // event.target.reset();
   };
   handleAddProjectBid = () => {
     console.log("clicked1");
@@ -115,17 +87,10 @@ class TeacherProjectBid extends Component {
     this.setState({ table: true });
   };
   handleProjectBidEditUpdate = (info,editInfo) => {
-    // this.setState({ table: true });
     let body = {
-      // ...info,CompanyID:formData1,ProjectBid:formData2
-      // _id: info["_id"],
       ProjectTitle: editInfo.target[0].value,
       ProjectURL: editInfo.target[1].value,
       ProjectDesc:editInfo.target[2].value,
-      // Portal_ID:editInfo.target[3].value,
-      // EstimatedTime:editInfo.target[4].value,
-      // EstimatedCost:editInfo.target[5].value,
-      // ResourceID:editInfo.target[6].value,
       Status:editInfo.target[3].value,
       Remark:editInfo.target[4].value,
     };
