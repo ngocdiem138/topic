@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./AdminPortalTable.css";
+import "./TeacherProjectBidTable.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -20,29 +20,33 @@ const override = css`
   border-color: red;
 `;
 
-class AdminPortalTable extends Component {
+class TeacherProjectBidTable extends Component {
   state = {
-    portalData: [],
+    projectBidData: [],
     loading: true,
 
     columnDefs: [
-
       {
-        headerName: "Portal",
-        field: "PortalName",
+        headerName: "Project Title",
+        field: "ProjectTitle",
         sortable: true,
-        // width: 150,
+        // width: "300px",
         // filter: true ,
       },
-
       {
-        headerName: "Status",
-        field: "Status",
+        headerName: "Project URL",
+        field: "ProjectURL",
         sortable: true,
-        // width: 150,
+        // width: "300px",
         // filter: true ,
       },
-
+      {
+        headerName: "Remark",
+        field: "Remark",
+        sortable: true,
+        width: 450,
+        // filter: true ,
+      },
 
 
       {
@@ -50,20 +54,15 @@ class AdminPortalTable extends Component {
         field: "edit",
         filter: false,
         width: 30,
-        cellRendererFramework: this.renderEditButton.bind(this)
+        cellRendererFramework: this.renderEditButton.bind(this),
+
+
       },
-      {
-        headerName: "",
-        field: "delete",
-        filter: false,
-        width: 30,
-        cellRendererFramework: this.renderButton.bind(this)
-      }
     ],
     rowData: [],
     defaultColDef: {
       resizable: true,
-      width: 590,
+      width: 350,
       filter: "agTextColumnFilter"
       // filter: true ,
     },
@@ -71,29 +70,32 @@ class AdminPortalTable extends Component {
       return 35;
     }
   };
-  portalObj = [];
+  projectBidObj = [];
   rowDataT = [];
 
-  loadPortalData = () => {
+  loadProjectBidData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/admin/portal", {
+      .get(process.env.REACT_APP_API_URL + "/api/teacher/project-bid", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
       })
       .then(response => {
-        this.portalObj = response.data;
-        // }
+        this.projectBidObj = response.data;
         console.log("response", response.data);
-        this.setState({ portalData: response.data });
+        this.setState({ projectBidData: response.data });
         this.setState({ loading: false });
         this.rowDataT = [];
 
-        this.portalObj.map(data => {
+        this.projectBidObj.map(data => {
           let temp = {
             data,
-            PortalName: data["PortalName"],
-            Status: data["Status"] == 1 ? "enable" : "disable",
+            ProjectTitle: data["ProjectTitle"],
+            // PortalName: data["portals"][0]["PortalName"],
+            ProjectURL: data["ProjectURL"],
+            EstimatedTime: data["EstimatedTime"],
+            EstimatedCost: data["EstimatedCost"],
+            Remark: data["Remark"],
 
           };
 
@@ -106,15 +108,11 @@ class AdminPortalTable extends Component {
       });
   };
 
-  onPortalDelete = e => {
+  onProjectBidDelete = e => {
     console.log(e);
-    if (
-      window.confirm(
-        "Are you sure to delete this record,It Will Delete All Projects Related to This Portal? "
-      ) == true
-    ) {
+    if (window.confirm("Are you sure to delete this record? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/admin/portal/" + e, {
+        .delete(process.env.REACT_APP_API_URL + "/api/admin/project-bid/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }
@@ -128,41 +126,36 @@ class AdminPortalTable extends Component {
     }
   };
   componentDidMount() {
-    this.loadPortalData();
+    this.loadProjectBidData();
   }
   renderButton(params) {
     console.log(params);
-    return (
-      <FontAwesomeIcon
-        icon={faTrash}
-        onClick={() =>
-          this.onPortalDelete(params.data.data["_id"])
-        }
-      />
-    );
+    return <FontAwesomeIcon
+      icon={faTrash}
+      onClick={() => this.onProjectBidDelete(params.data.data["_id"])}
+    />;
   }
   renderEditButton(params) {
     console.log(params);
-    return (
-      <FontAwesomeIcon
-        icon={faEdit}
-        onClick={() => this.props.onEditPortal(params.data.data)}
-      />
-    );
+    return <FontAwesomeIcon
+      icon={faEdit}
+      onClick={() => this.props.onEditProjectBid(params.data.data)}
+    />;
   }
 
   render() {
     return (
       <div id="table-outer-div-scroll">
-        <h2 id="role-title">Portal Details</h2>
-        <Button
+        <h2 id="role-title">Topic Details</h2>
+        {/* <Button
           variant="primary"
           id="add-button"
-          onClick={this.props.onAddPortal}
+          onClick={this.props.onAddProjectBid}
         >
           <FontAwesomeIcon icon={faPlus} id="plus-icon" />
           Add
-        </Button>
+        </Button> */}
+
         <div id="clear-both" />
 
         {!this.state.loading ? (
@@ -205,4 +198,4 @@ class AdminPortalTable extends Component {
   }
 }
 
-export default AdminPortalTable;
+export default TeacherProjectBidTable;

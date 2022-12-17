@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "./AdminProjectBidForm.css";
+import "./TeacherProjectBidForm.css";
 import axios from "axios";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
-class AdminProjectBidForm extends Component {
+class TeacherProjectBidForm extends Component {
   state = {
     status: "",
     portalsInfo: []
@@ -123,4 +123,4 @@ class AdminProjectBidForm extends Component {
   }
 }
 
-export default AdminProjectBidForm;
+export default TeacherProjectBidForm;

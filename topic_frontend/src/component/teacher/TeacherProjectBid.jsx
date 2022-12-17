@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import "./AdminProjectBid.css";
+import "./TeacherProjectBid.css";
 import axios from "axios";
-import AdminProjectBidTable from "./AdminProjectBidTable.jsx";
-import AdminProjectBidForm from "./AdminProjectBidForm.jsx";
-import AdminProjectBidFormEdit from "./AdminProjectBidFormEdit.jsx";
+import TeacherProjectBidTable from "./TeacherProjectBidTable.jsx";
+import TeacherProjectBidForm from "./TeacherProjectBidForm.jsx";
+import TeacherProjectBidFormEdit from "./TeacherProjectBidFormEdit.jsx";
 // import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 // function AdminProjectBidTableF() {
-//   return <AdminProjectBidTable/>;
+//   return <TeacherProjectBidTable/>;
 // }
 // function AdminProjectBidFormF() {
-//   return  <AdminProjectBidForm onProjectBidSubmit={handleProjectBidSubmit}/>;
+//   return  <TeacherProjectBidForm onProjectBidSubmit={handleProjectBidSubmit}/>;
 // }
 
 // function handleProjectBidSubmit(e) {
@@ -19,7 +19,7 @@ import AdminProjectBidFormEdit from "./AdminProjectBidFormEdit.jsx";
 
 // }
 
-class AdminProjectBid extends Component {
+class TeacherProjectBid extends Component {
   state = {
     table: true,
     editForm: false,
@@ -33,29 +33,29 @@ class AdminProjectBid extends Component {
       <React.Fragment>
         {this.state.table ? (
           this.state.editForm ? (
-            <AdminProjectBidFormEdit
+            <TeacherProjectBidFormEdit
               onProjectBidEditUpdate={this.handleProjectBidEditUpdate}
               onFormEditClose={this.handleEditFormClose}
               editData={this.state.editData}
             />
           ) : (
-            <AdminProjectBidTable
+            <TeacherProjectBidTable
               onAddProjectBid={this.handleAddProjectBid}
               onEditProjectBid={this.handleEditProjectBid}
             />
           )
         ) : (
-          <AdminProjectBidForm
+          <TeacherProjectBidForm
             onProjectBidSubmit={this.handleProjectBidSubmit}
             onFormClose={this.handleFormClose}
           />
         )}
 
         {/* <div>fenil</div> */}
-        {/* <Route path="/admin/ProjectBid/table" exact component={AdminProjectBidTable} /> */}
-        {/* <Route path="/admin/ProjectBid/form" exact component={() => <AdminProjectBidForm onProjectBidSubmit={this.handleProjectBidSubmit} />} /> */}
+        {/* <Route path="/admin/ProjectBid/table" exact component={TeacherProjectBidTable} /> */}
+        {/* <Route path="/admin/ProjectBid/form" exact component={() => <TeacherProjectBidForm onProjectBidSubmit={this.handleProjectBidSubmit} />} /> */}
 
-        {/* <AdminProjectBidTable/> */}
+        {/* <TeacherProjectBidTable/> */}
         </React.Fragment>
 
       //  </Router>
@@ -149,4 +149,4 @@ class AdminProjectBid extends Component {
   };
 }
 
-export default AdminProjectBid;
+export default TeacherProjectBid;

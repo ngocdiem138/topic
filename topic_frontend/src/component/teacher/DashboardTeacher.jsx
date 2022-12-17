@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 
 import Role from "../Role.jsx";
 import NavBar from "../NavBar.jsx";
-import AdminProjectBid from "./AdminProjectBid.jsx";
+import TeacherProjectBid from "./TeacherProjectBid.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
 
@@ -24,26 +24,26 @@ function RoleAdminF() {
   return <Role />;
 }
 function AdminProjectBidF() {
-  return <AdminProjectBid />;
+  return <TeacherProjectBid />;
 }
 
 class DashboardTeacher extends Component {
   state = {
     redirect: true,
-    checked: true 
+    checked: true
   };
-  handleChange=(checked)=> {
+  handleChange = (checked) => {
     console.log("switch");
     // var sidebarV = this.refs.sidebar;
     // var sidebarV = React.findDOMNode( this.refs.sidebar);
     // sidebarV.style.disply="none";
-    
-    if(this.state.checked==true){ 
-       // document.getElementById("sidebar").setAttribute("style", "display:none")
+
+    if (this.state.checked == true) {
+      // document.getElementById("sidebar").setAttribute("style", "display:none")
       document.getElementById("sidebar").setAttribute("class", "display-none");
     }
     // document.getElementById("sidebar").setAttribute("style", "display:block");
-    else{document.getElementById("sidebar").setAttribute("class", "display-block");}   
+    else { document.getElementById("sidebar").setAttribute("class", "display-block"); }
     this.setState({ checked });
   }
 
@@ -54,7 +54,7 @@ class DashboardTeacher extends Component {
 
         <div id="outer-main-div">
           <div id="outer-nav">
-            <NavBar loginInfo={this.props.data} checked={this.state.checked} handleChange={this.handleChange} onLogout={this.props.onLogout}/>
+            <NavBar loginInfo={this.props.data} checked={this.state.checked} handleChange={this.handleChange} onLogout={this.props.onLogout} />
           </div>
 
           <div id="main-non-nav">
@@ -70,9 +70,9 @@ class DashboardTeacher extends Component {
                     <FontAwesomeIcon
                       icon={faTasks}
                       className="sidebar-icon"
-                    /> 
+                    />
                     List Topic
-                  </Link> 
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -84,8 +84,8 @@ class DashboardTeacher extends Component {
               <Switch>
                 <Route exact path="/admin/project-bid" component={AdminProjectBidF} />
                 {/* <Route path="/admin/role/form" exact component={RoleFormF} /> */}
-                 
-                 <Route
+
+                <Route
                   path="/admin/project-bid"
                   exact
                   component={AdminProjectBidF}
@@ -95,14 +95,8 @@ class DashboardTeacher extends Component {
                   exact
                   component={AdminProjectBidF}
                 />
-                {/* <Route
-                  exact
-                  path="/admin"
-                  render={() => <Redirect to="/admin/role" />}
-                /> */}
-                <Route render={() => 
-<NotFound404/>
-                  // <Redirect to="/admin/role" />
+                <Route render={() =>
+                  <NotFound404 />
                 } />
               </Switch>
             </div>

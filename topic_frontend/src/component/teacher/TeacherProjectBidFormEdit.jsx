@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import "./AdminProjectBidFormEdit.css";
+import "./TeacherProjectBidFormEdit.css";
 import axios from "axios";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
 
 
-class AdminProjectBidFormEdit extends Component {
+class TeacherProjectBidFormEdit extends Component {
   state = {
     status: '',
     portalsInfo: [],
@@ -150,4 +150,4 @@ class AdminProjectBidFormEdit extends Component {
   }
 }
 
-export default AdminProjectBidFormEdit;
+export default TeacherProjectBidFormEdit;
