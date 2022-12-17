@@ -52,8 +52,8 @@ class Role extends Component {
           )}
 
         {/* <div>fenil</div> */}
-        {/* <Route path="/admin/role/table" exact component={RoleTable} /> */}
-        {/* <Route path="/admin/role/form" exact component={() => <RoleForm onRoleSubmit={this.handleRoleSubmit} />} /> */}
+        {/* <Route path="/teacher/role/table" exact component={RoleTable} /> */}
+        {/* <Route path="/teacher/role/form" exact component={() => <RoleForm onRoleSubmit={this.handleRoleSubmit} />} /> */}
 
         {/* <RoleTable/> */}
       </React.Fragment>

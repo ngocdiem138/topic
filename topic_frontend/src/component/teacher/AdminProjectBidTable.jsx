@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./StudentProjectBidTable.css";
+import "./AdminProjectBidTable.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,7 @@ const override = css`
   border-color: red;
 `;
 
-class StudentProjectBidTable extends Component {
+class AdminProjectBidTable extends Component {
   state = {
     projectBidData: [],
     loading: true,
@@ -29,19 +29,22 @@ class StudentProjectBidTable extends Component {
       {
         headerName: "Project Title",
         field: "ProjectTitle",
-        sortable: true
+        sortable: true,
+        // width: "300px",
         // filter: true ,
       },
       {
         headerName: "Project URL",
         field: "ProjectURL",
-        sortable: true
+        sortable: true,
+        // width: "300px",
         // filter: true ,
       },
       {
         headerName: "Remark",
         field: "Remark",
-        sortable: true
+        sortable: true,
+        width: 450,
         // filter: true ,
       },
 
@@ -55,21 +58,11 @@ class StudentProjectBidTable extends Component {
 
 
       },
-      // {
-      //   headerName: "",
-      //   field: "delete",
-      //   filter: false,
-      //   width: 30,
-      //   cellRendererFramework: this.renderButton.bind(this),
-
-
-      // },
-
     ],
     rowData: [],
     defaultColDef: {
       resizable: true,
-      width: 200,
+      width: 350,
       filter: "agTextColumnFilter"
       // filter: true ,
     },
@@ -82,7 +75,7 @@ class StudentProjectBidTable extends Component {
 
   loadProjectBidData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/student/project-bid", {
+      .get(process.env.REACT_APP_API_URL + "/api/teacher/project-bid", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -100,8 +93,8 @@ class StudentProjectBidTable extends Component {
             ProjectTitle: data["ProjectTitle"],
             // PortalName: data["portals"][0]["PortalName"],
             ProjectURL: data["ProjectURL"],
-            // EstimatedTime: data["EstimatedTime"],
-            // EstimatedCost: data["EstimatedCost"],
+            EstimatedTime: data["EstimatedTime"],
+            EstimatedCost: data["EstimatedCost"],
             Remark: data["Remark"],
 
           };
@@ -116,21 +109,21 @@ class StudentProjectBidTable extends Component {
   };
 
   onProjectBidDelete = e => {
-  //   console.log(e);
-  //   if (window.confirm("Are you sure to delete this record? ") == true) {
-  //     axios
-  //       .delete(process.env.REACT_APP_API_URL + "/api/teacher/project-bid/" + e, {
-  //         headers: {
-  //           authorization: localStorage.getItem("token") || ""
-  //         }
-  //       })
-  //       .then(res => {
-  //         this.componentDidMount();
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }
+    console.log(e);
+    if (window.confirm("Are you sure to delete this record? ") == true) {
+      axios
+        .delete(process.env.REACT_APP_API_URL + "/api/teacher/project-bid/" + e, {
+          headers: {
+            authorization: localStorage.getItem("token") || ""
+          }
+        })
+        .then(res => {
+          this.componentDidMount();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
   componentDidMount() {
     this.loadProjectBidData();
@@ -154,14 +147,14 @@ class StudentProjectBidTable extends Component {
     return (
       <div id="table-outer-div-scroll">
         <h2 id="role-title">Topic Details</h2>
-        <Button
+        {/* <Button
           variant="primary"
           id="add-button"
           onClick={this.props.onAddProjectBid}
         >
           <FontAwesomeIcon icon={faPlus} id="plus-icon" />
           Add
-        </Button>
+        </Button> */}
 
         <div id="clear-both" />
 
@@ -205,4 +198,4 @@ class StudentProjectBidTable extends Component {
   }
 }
 
-export default StudentProjectBidTable;
+export default AdminProjectBidTable;

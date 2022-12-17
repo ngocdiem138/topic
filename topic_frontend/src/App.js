@@ -91,7 +91,7 @@ class App extends Component {
             render={props =>
               this.state.data["Account"] == 1 ? (
                 // <Dashboard />
-                <Redirect to="/admin/project-bid" />
+                <Redirect to="/teacher/project-bid" />
               ) : // <Login OnLogin={this.handleLogin}/>
 
                 this.state.data["Account"] == 2 ? (
@@ -112,7 +112,7 @@ class App extends Component {
           />
           <Route
             // exact
-            path="/admin"
+            path="/teacher"
             render={props =>
               this.state.data["Account"] == 1 ? (
                 <DashboardTeacher
@@ -236,7 +236,7 @@ class App extends Component {
               decodedData["FirstName"] + " " + decodedData["LastName"]
             );
             this.componentDidMount();
-            history.push("#/admin/project-bid");
+            history.push("#/teacher/project-bid");
           }
           if (decodedData.Account == 2) {
             // this.setState({ data: decodedData });

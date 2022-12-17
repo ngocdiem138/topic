@@ -66,7 +66,7 @@ class DashboardTeacher extends Component {
               </div>
               <ul className="navbar-ul">
                 <li>
-                  <Link to="/admin/project-bid">
+                  <Link to="/teacher/project-bid">
                     <FontAwesomeIcon
                       icon={faTasks}
                       className="sidebar-icon"
@@ -82,11 +82,11 @@ class DashboardTeacher extends Component {
               {/* //table */}
               {/* <RoleAdmin/> */}
               <Switch>
-                <Route exact path="/admin/project-bid" component={TeacherProjectBidF} />
-                {/* <Route path="/admin/role/form" exact component={RoleFormF} /> */}
+                <Route exact path="/teacher/project-bid" component={TeacherProjectBidF} />
+                {/* <Route path="/teacher/role/form" exact component={RoleFormF} /> */}
 
                 <Route
-                  path="/admin/project-bid"
+                  path="/teacher/project-bid"
                   exact
                   component={TeacherProjectBidF}
                 />

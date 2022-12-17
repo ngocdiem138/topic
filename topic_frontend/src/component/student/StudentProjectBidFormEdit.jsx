@@ -50,7 +50,7 @@ class StudentProjectBidFormEdit extends Component {
   }
   loadPortalsInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/admin/portal", {
+      .get(process.env.REACT_APP_API_URL + "/api/teacher/portal", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
