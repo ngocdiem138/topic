@@ -23,7 +23,7 @@ import {
 function RoleAdminF() {
   return <Role />;
 }
-function AdminProjectBidF() {
+function TeacherProjectBidF() {
   return <TeacherProjectBid />;
 }
 
@@ -82,18 +82,18 @@ class DashboardTeacher extends Component {
               {/* //table */}
               {/* <RoleAdmin/> */}
               <Switch>
-                <Route exact path="/admin/project-bid" component={AdminProjectBidF} />
+                <Route exact path="/admin/project-bid" component={TeacherProjectBidF} />
                 {/* <Route path="/admin/role/form" exact component={RoleFormF} /> */}
 
                 <Route
                   path="/admin/project-bid"
                   exact
-                  component={AdminProjectBidF}
+                  component={TeacherProjectBidF}
                 />
                 <Route
                   path="/student/project-bid"
                   exact
-                  component={AdminProjectBidF}
+                  component={TeacherProjectBidF}
                 />
                 <Route render={() =>
                   <NotFound404 />

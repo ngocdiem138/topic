@@ -15,27 +15,27 @@ class TeacherProjectBidForm extends Component {
       status: event.target.value
     });
   };
-  loadPortalsInfo = () => {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/api/admin/portal", {
-        headers: {
-          authorization: localStorage.getItem("token") || ""
-        }
-      })
-      .then(response => {
-        // i
-        this.portalsData = response.data;
-
-        this.portalsData = this.portalsData.filter(data => data["Status"] == 1);
-
-        this.setState({ portalsInfo: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  // loadPortalsInfo = () => {
+  //   axios
+  //     .get(process.env.REACT_APP_API_URL + "/api/admin/portal", {
+  //       headers: {
+  //         authorization: localStorage.getItem("token") || ""
+  //       }
+  //     })
+  //     .then(response => {
+  //       // i
+  //       this.portalsData = response.data;
+  //
+  //       this.portalsData = this.portalsData.filter(data => data["Status"] == 1);
+  //
+  //       this.setState({ portalsInfo: response.data });
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
   componentDidMount() {
-    this.loadPortalsInfo();
+    // this.loadPortalsInfo();
   }
   render() {
     return (

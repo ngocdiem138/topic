@@ -111,7 +111,7 @@ class TeacherProjectBidTable extends Component {
     console.log(e);
     if (window.confirm("Are you sure to delete this record? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/admin/project-bid/" + e, {
+        .delete(process.env.REACT_APP_API_URL + "/api/teacher/project-bid/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }
