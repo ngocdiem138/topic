@@ -70,13 +70,6 @@ class PersonalInfoTable extends Component {
         // filter: true ,
         // width: 150,
       },
-      {
-        headerName: "PANcard No",
-        field: "PANcardNo",
-        sortable: true,
-        // filter: true ,
-        // width: 150,
-      },
 
       {
         headerName: "DOB",
@@ -105,15 +98,8 @@ class PersonalInfoTable extends Component {
         field: "edit",
         filter: false,
         width: 30,
-        // cellRenderer:this.ageCellRendererFunc,
-        // cellRendererFramework: function(params) {
-        //   return <button OnClick={console.log("pa",params)}>Test</button>;
-        // },
         cellRendererFramework: this.renderEditButton.bind(this),
-
-
       },
-
 
     ],
     rowData: [],
@@ -143,7 +129,6 @@ class PersonalInfoTable extends Component {
         this.setState({ loading: false });
         this.rowDataT = [];
         console.log("personalInfoObj", this.personalInfoObj)
-        // this.personalInfoObj.map(data => {
         let data = this.personalInfoObj;
         let temp = {
           data,
@@ -153,7 +138,6 @@ class PersonalInfoTable extends Component {
           Gender: data["Gender"] || "Not Avaiable",
           ContactNo: data["ContactNo"] || "Not Avaiable",
           Email: data["Email"] || "Not Avaiable",
-          PANcardNo: data["PANcardNo"] || "Not Avaiable",
           DOB: data["DOB"].slice(0, 10) || "Not Avaiable",
           Hobbies: data["Hobbies"] || "Not Avaiable",
           PresentAddress: data["PresentAddress"] || "Not Avaiable",
@@ -161,9 +145,7 @@ class PersonalInfoTable extends Component {
         };
 
         this.rowDataT.push(temp);
-        // });
         this.setState({ rowData: this.rowDataT });
-        // console.log("rowData",this.state.rowData)
 
       })
       .catch(error => {
@@ -204,15 +186,6 @@ class PersonalInfoTable extends Component {
     return (
       <div id="table-outer-div-scroll">
         <h2 id="role-title">Student Personal Details {this.props.back ? "of " + this.props.data["FirstName"] + " " + this.props.data["LastName"] : ""}</h2>
-        {/* 
-        <Button
-          variant="primary"
-          id="add-button"
-          onClick={this.props.onAddPersonalInfo}
-        >
-          <FontAwesomeIcon icon={faPlus} id="plus-icon" />
-          Add
-        </Button> */}
         {this.props.back ? (<Link to="/admin/student">
           <Button
             variant="primary"
@@ -229,20 +202,12 @@ class PersonalInfoTable extends Component {
           <div
             id="table-div"
             className="ag-theme-balham"
-          //   style={
-          //     {
-          //     height: "500px",
-          //     width: "100%"
-          //   }
-          // }
           >
             <AgGridReact
               columnDefs={this.state.columnDefs}
               defaultColDef={this.state.defaultColDef}
               columnTypes={this.state.columnTypes}
               rowData={this.state.rowData}
-              // floatingFilter={true}
-              // onGridReady={this.onGridReady}
               pagination={true}
               paginationPageSize={10}
               getRowHeight={this.state.getRowHeight}

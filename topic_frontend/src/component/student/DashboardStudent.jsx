@@ -29,16 +29,9 @@ class DashboardHR extends Component {
     checked: true 
   };
   handleChange=(checked)=> {
-    console.log("switch");
-    // var sidebarV = this.refs.sidebar;
-    // var sidebarV = React.findDOMNode( this.refs.sidebar);
-    // sidebarV.style.disply="none";
-    
     if(this.state.checked==true){ 
-       // document.getElementById("sidebar").setAttribute("style", "display:none")
       document.getElementById("sidebar").setAttribute("class", "display-none");
     }
-    // document.getElementById("sidebar").setAttribute("style", "display:block");
     else{document.getElementById("sidebar").setAttribute("class", "display-block");}   
     this.setState({ checked });
   }
@@ -95,17 +88,9 @@ class DashboardHR extends Component {
                 </li>
               </ul>
             </div>
-            {/* <div id="sidebar-top-content" /> */}
             <div id="main-area">
               <div id="sidebar-top-content" />
-              {/* //table */}
-              {/* <RoleHR/> */}
               <Switch>
-                {/* <Route
-                  path="/student/:id/personal-info"
-                  exact
-                  component={PersonalInfoF}
-                /> */}
                 <Route
                   exact
                   path="/student/:id/personal-info"
