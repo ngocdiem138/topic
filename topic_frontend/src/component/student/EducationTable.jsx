@@ -173,7 +173,7 @@ class EducationTable extends Component {
       <div id="table-outer-div-scroll">
         <h2 id="role-title">Employee Education Details {this.props.back ? "of " + this.props.data["FirstName"] + " " + this.props.data["LastName"] : ""}</h2>
 
-        {this.props.back ? (<Link to="/hr/student">
+        {this.props.back ? (<Link to="/admin/student">
           <Button
             variant="primary"
             id="add-button"

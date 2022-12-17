@@ -73,7 +73,7 @@ class DashboardAdmin extends Component {
               </div>
               <ul className="navbar-ul">
                 <li>
-                  <Link to="/hr/student">
+                  <Link to="/admin/student">
                     <FontAwesomeIcon icon={faUser} className="sidebar-icon" />
                     User
                   </Link>
@@ -87,11 +87,11 @@ class DashboardAdmin extends Component {
               {/* <RoleHR/> */}
               <Switch>
                 <Route
-                  path="/hr/student"
+                  path="/admin/student"
                   // exact
                   component={StudentF}
                 />
-                <Route path="/hr/role" component={RoleHRF} />
+                <Route path="/admin/role" component={RoleHRF} />
                 <Route render={() => <NotFound404 />} />
 
               </Switch>

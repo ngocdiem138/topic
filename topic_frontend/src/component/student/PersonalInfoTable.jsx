@@ -213,7 +213,7 @@ class PersonalInfoTable extends Component {
           <FontAwesomeIcon icon={faPlus} id="plus-icon" />
           Add
         </Button> */}
-        {this.props.back ? (<Link to="/hr/student">
+        {this.props.back ? (<Link to="/admin/student">
           <Button
             variant="primary"
             id="add-button"

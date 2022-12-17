@@ -27,7 +27,7 @@ class Student extends Component {
       <Router>
         <Route
           exact
-          path="/hr/student"
+          path="/admin/student"
           render={props =>
             <React.Fragment>
               {/* {this.redirectF} */}
@@ -63,12 +63,12 @@ class Student extends Component {
 
         <Route
           exact
-          path="/hr/student/info/personal-info"
+          path="/admin/student/info/personal-info"
           render={props => <PersonalInfo data={this.state.EmpInfo} back={true} />}
         />
         <Route
           exact
-          path="/hr/student/info/education"
+          path="/admin/student/info/education"
           render={props => <Education data={this.state.EmpInfo} back={true} />}
         />
       </Router>
@@ -76,7 +76,7 @@ class Student extends Component {
   }
   handleEmpInfo = e => {
     console.log("info", e);
-    // history.push("/hr/student/form-edit");
+    // history.push("/admin/student/form-edit");
     this.setState({ EmpInfo: e });
     this.setState({ EmpInfoBool: true })
   };

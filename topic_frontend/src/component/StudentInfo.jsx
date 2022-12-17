@@ -23,7 +23,7 @@ export class StudentInfo extends Component {
 
         <h2 id="role-title">Employee Information of {this.props.data["FirstName"]+" "+this.props.data["LastName"]}</h2>
         <div id="outer-empingo-div">
-        <Link to="/hr/student/info/personal-info">
+        <Link to="/admin/student/info/personal-info">
           <Button
             variant="outline-primary"
             size="lg"
@@ -34,7 +34,7 @@ export class StudentInfo extends Component {
             Personal Information
           </Button>
           </Link>
-          {/* <Link to="/hr/student/info/education">
+          {/* <Link to="/admin/student/info/education">
           <Button
             variant="outline-primary"
             size="lg"
